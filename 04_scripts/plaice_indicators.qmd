@@ -98,7 +98,12 @@ NEesp2::plt_indicator(data = vesselrev,
 
 Water temperatures control spawning; optimum spawning temperatures range between 3-6C but can thrive from -0.5 to 13C. Spawning occurs from March - June, peaking in April/May. Distribution appears to be defined by warm summer and fall temperatures. 
 
-From ESP: "Bottom temperature anomaly and SSB were both significant factors influencing plaice shift to deeper and more northward distribution."
+From ESP: "Bottom temperature anomaly and SSB were both significant factors influencing plaice shift to deeper and more northward distribution." 
+
+March-August bottom temperature anomaly affects recruitment.
+Annual bottom temp anomaly leading up to spring survey (March-February) affects mean latitude.
+Annual bottom temp anomaly leading up to fall survey (Sept-August) affects mean latitude and fall condition.
+
 
 Temperatures in the stock area are near the long-term mean for all months in 2025, down from a peak in temperatures from 2020-2023 and 10+ years above the LT mean. 
 
@@ -109,7 +114,7 @@ url2 <- here::here("01_inputs/AMERICANPLAICE_glorys_bottomT.csv")
 
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
-#| fig-height: 9
+#| fig-height: 7
 #| fig-align: center
 
 bt_data <- read.csv(url1) |>
@@ -143,13 +148,14 @@ NEesp2::plt_indicator(
 
 Sea surface temperature is an important consideration for plaice recruitment. The thermal limit for survival and incubation of American plaice eggs is 14C, and recent sea surface temperatures in late spring-early summer (the end of the spawning season) have exceeded that threshold. 
 
+March-June SST anomaly affects recruitment
 ```{r}
 sst <- here::here("01_inputs/AMERICANPLAICE_sst.csv")
 ```
 
 ```{r}
 #| fig-width: 7
-#| fig-height: 9
+#| fig-height: 7
 #| fig-align: center
 
 sst <- read.csv(sst) |>
@@ -184,6 +190,8 @@ NEesp2::plt_indicator(
 Currents, changes in circulation patterns, and shelf-slope dynamics are responsible for egg and larval transport.
 
 When the strength of Labrador current is weak, a higher proportion of warm water coming from the Gulf Stream enters the Gulf of Maine, increasing Gulf of Maine water temperatures. The position of the Gulf Stream has shifted northward and the Gulf of Maine has seen temperature warming rates much higher than that of the global average in recent decades.
+
+The annual mean of the Gulf Stream position leading up to fall survey affects recruitment.
 
 ```{r}
 data <- ecodata::gsi
@@ -253,6 +261,8 @@ plt_indicator_gsi(gsi)
 
 From ESP: "Reproductive rate (recruits per spawner) of American plaice is significantly related to temperature and the North Atlantic Oscillation, where greatest recruitment rates occur at extreme cold temperatures.
 
+1-2 year lag effect on recruitment
+
 ```{r}
 nao <- read.csv(here::here('01_inputs/nao_index.csv'))
 
@@ -273,6 +283,9 @@ NEesp2::plt_indicator(data = nao_yearly,
 
 From ESP: "AMO was the most prevalent significant variable between both the condition index and WAA analyses, higher AMO = better condition and weight at age. Recruits per spawner increased with increasing AMO values up to a point, but then declined." 
 
+6 months AMO prior to fall survey affects recruitment and fall condition
+6 months AMO prior to spring survey affects recruitment
+
 AMO has been greater than +1 SD of the long term mean since 2020, indicating possible better condition and recruitment for plaice.
 
 ```{r}
@@ -288,5 +301,19 @@ amo_yearly <- amo |>
 NEesp2::plt_indicator(data = amo_yearly,
                       ar = 1/4,
                       include_trends = TRUE)  
+```
+
+## Condition
+
+```{r condition}
+#| fig-width: 7
+#| fig-height: 3
+#| fig-align: center
+
+data <- read.csv(here::here("03_outputs/plaice_condition.csv"))
+
+NEesp2::plot_condition(data = data,
+                       var = "American plaice", 
+                       return = TRUE)
 ```
 
