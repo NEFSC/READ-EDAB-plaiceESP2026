@@ -220,6 +220,7 @@ gsi <- ecodata::gsi |>
                 MONTH = Month,
                 DATA_VALUE = Value) |>
   dplyr::select(YEAR, MONTH, INDICATOR_NAME, DATA_VALUE) |>
+  dplyr::mutate(YEAR = as.numeric(.data$YEAR)) |>
   dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:8), YEAR - 1, YEAR)) |>
   dplyr::group_by(Season_Start_Year) |>
   dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),

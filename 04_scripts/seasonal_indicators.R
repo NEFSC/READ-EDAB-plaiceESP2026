@@ -41,6 +41,7 @@ gsi <- ecodata::gsi |>
                 YEAR = Year,
                 MONTH = Month,
                 DATA_VALUE = Value) |>
+  dplyr::mutate(YEAR = as.numeric(.data$YEAR)) |>
   dplyr::select(YEAR, MONTH, INDICATOR_NAME, DATA_VALUE) |>
   dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:8), YEAR - 1, YEAR)) |>
   dplyr::group_by(Season_Start_Year) |>
