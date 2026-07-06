@@ -110,38 +110,69 @@ Temperatures in the stock area are near the long-term mean for all months in 202
 ```{r plaice-bt-data}
 url1 <- here::here("01_inputs/AMERICANPLAICE_hubert_bottomT.csv")
 url2 <- here::here("01_inputs/AMERICANPLAICE_glorys_bottomT.csv")
-```
-
-```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
-#| fig-width: 7
-#| fig-height: 7
-#| fig-align: center
 
 bt_data <- read.csv(url1) |>
-  dplyr::bind_rows(read.csv(url2)) |>
-  dplyr::mutate(
-    SEASON = dplyr::case_when(
-      MONTH %in% c(1, 2, 3)    ~ "Winter",
-      MONTH %in% c(4, 5, 6)    ~ "Spring",
-      MONTH %in% c(7, 8, 9)    ~ "Summer",
-      MONTH %in% c(10, 11, 12) ~ "Fall"
-    )
-  ) |>
-  dplyr::group_by(AREA, SEASON, YEAR, INDICATOR_NAME, INDICATOR_UNITS) |>
-  dplyr::summarise(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(INDICATOR_NAME = "seasonal_bottomT") |>
-  dplyr::filter(YEAR >= 1970)
+  dplyr::bind_rows(read.csv(url2))
+```
 
-NEesp2::plt_indicator(
-  data = bt_data,
-  ar = 1/4,
-  include_trends = FALSE
-) +
-  ggplot2::facet_grid(SEASON ~ .,
-                      scales = "free_y") +
-  ggplot2::geom_smooth(method = "lm", se = FALSE, color = "purple", linetype = "solid") +
-  ggplot2::geom_line() +
-  ggplot2::geom_point()
+#### SEASONAL (RECRUITMENT) = MAR - AUG
+```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
+#| fig-width: 7
+#| fig-align: center
+
+seasonal_bt <- bt_data |>
+  dplyr::filter(YEAR >= 1970) |>
+  dplyr::filter(MONTH %in% 3:8) |>
+  dplyr::group_by(YEAR) |>
+  dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE)) |>
+  dplyr::mutate(INDICATOR_NAME = "seasonal_bt")
+
+NEesp2::plt_indicator(data = seasonal_bt,
+                      ar = 1/4,
+                      include_trends = TRUE)  
+  
+```
+
+#### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
+```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
+#| fig-width: 7
+#| fig-align: center
+
+fall_bt <- bt_data |>
+  dplyr::filter(YEAR >= 1970) |>
+  dplyr::group_by(YEAR) |>
+  dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:8), YEAR - 1, YEAR)) |>
+  dplyr::ungroup() |>
+  dplyr::group_by(Season_Start_Year) |>
+  dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
+                   Days_Count = dplyr::n()) |> #daily value, how many days are included in the average
+  dplyr::rename(YEAR = Season_Start_Year) |>
+  dplyr::mutate(INDICATOR_NAME = "fall_bt")
+
+NEesp2::plt_indicator(data = fall_bt,
+                      ar = 1/4,
+                      include_trends = TRUE)
+```
+
+#### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
+```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
+#| fig-width: 7
+#| fig-align: center
+
+spring_bt <- bt_data |>
+  dplyr::filter(YEAR >= 1970) |>
+  dplyr::group_by(YEAR) |>
+  dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:2), YEAR - 1, YEAR)) |>
+  dplyr::ungroup() |>
+  dplyr::group_by(Season_Start_Year) |>
+  dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
+                   Days_Count = dplyr::n()) |> #daily value, how many days are included in the average
+  dplyr::rename(YEAR = Season_Start_Year) |>
+  dplyr::mutate(INDICATOR_NAME = "spring_bt") 
+
+NEesp2::plt_indicator(data = spring_bt,
+                      ar = 1/4,
+                      include_trends = TRUE)
 ```
 
 ### Sea Surface Temperature 
@@ -149,39 +180,23 @@ NEesp2::plt_indicator(
 Sea surface temperature is an important consideration for plaice recruitment. The thermal limit for survival and incubation of American plaice eggs is 14C, and recent sea surface temperatures in late spring-early summer (the end of the spawning season) have exceeded that threshold. 
 
 March-June SST anomaly affects recruitment
-```{r}
-sst <- here::here("01_inputs/AMERICANPLAICE_sst.csv")
-```
+
+#### SEASONAL = MAR - JUNE 
 
 ```{r}
 #| fig-width: 7
-#| fig-height: 7
 #| fig-align: center
 
-sst <- read.csv(sst) |>
-  dplyr::mutate(
-    SEASON = dplyr::case_when(
-      MONTH %in% c(1, 2, 3)    ~ "Winter",
-      MONTH %in% c(4, 5, 6)    ~ "Spring",
-      MONTH %in% c(7, 8, 9)    ~ "Summer",
-      MONTH %in% c(10, 11, 12) ~ "Fall"
-    )
-  ) |>
-  dplyr::group_by(AREA, SEASON, YEAR, INDICATOR_NAME, INDICATOR_UNITS) |>
-  dplyr::summarise(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE), .groups = "drop") |>
-  dplyr::mutate(INDICATOR_NAME = "seasonal_bottomT") |>
-  dplyr::filter(YEAR >= 1970)
+seasonal_sst <- read.csv(here::here('01_inputs/AMERICANPLAICE_sst.csv')) |>
+  dplyr::filter(YEAR >= 1970) |>
+  dplyr::filter(MONTH %in% 3:6) |>
+  dplyr::group_by(YEAR) |>
+  dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE)) |>
+  dplyr::mutate(INDICATOR_NAME = "seasonal_sst")
 
-NEesp2::plt_indicator(
-  data = sst,
-  ar = 1/4,
-  include_trends = FALSE
-) +
-  ggplot2::facet_grid(SEASON ~ .,
-                      scales = "free_y") +
-  ggplot2::geom_smooth(method = "lm", se = FALSE, color = "purple", linetype = "solid") +
-  ggplot2::geom_line() +
-  ggplot2::geom_point()
+NEesp2::plt_indicator(data = seasonal_sst,
+                      ar = 1/4,
+                      include_trends = TRUE)
 ```
 
 
@@ -193,66 +208,28 @@ When the strength of Labrador current is weak, a higher proportion of warm water
 
 The annual mean of the Gulf Stream position leading up to fall survey affects recruitment.
 
+#### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
 ```{r}
-data <- ecodata::gsi
-
-create_gsi <- function(data){
-  gsi <- data |>
-    tidyr::separate(Time, c("Year", "Month"), sep = "\\.")
-  
-  return(gsi)
-}
-
-gsi <- create_gsi(data) |>
-  dplyr::filter(Var == 'gulf stream index') |>
+gsi <- ecodata::gsi |>
+  tidyr::separate(Time, c("Year", "Month"), sep = "\\.") |>
+  dplyr::mutate(Month = dplyr::if_else(Month == "1", "10", Month)) |> # has october as '1' instead of '10'
+  dplyr::filter(Var == 'gulf stream index',
+                Year >= 1970) |>
   dplyr::rename(INDICATOR_NAME = Var,
                 YEAR = Year,
+                MONTH = Month,
                 DATA_VALUE = Value) |>
-  dplyr::group_by(YEAR) |>
-  dplyr::mutate(avg = mean(DATA_VALUE))
+  dplyr::select(YEAR, MONTH, INDICATOR_NAME, DATA_VALUE) |>
+  dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:8), YEAR - 1, YEAR)) |>
+  dplyr::group_by(Season_Start_Year) |>
+  dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
+                   Months_Count = dplyr::n()) |>
+  dplyr::rename(YEAR = Season_Start_Year) |>
+  dplyr::mutate(INDICATOR_NAME = "gulf_stream_index")
 
-plt_indicator_gsi <- function(data) {
-  plt <- data |>
-    dplyr::group_by(INDICATOR_NAME) |>
-    dplyr::mutate(mean = mean(DATA_VALUE, na.rm = TRUE),
-                  sd = sd(DATA_VALUE, na.rm = TRUE)) |>
-    ggplot2::ggplot(ggplot2::aes(x = as.numeric(YEAR),
-                                 y = avg
-    )) +
-    ggplot2::geom_hline(ggplot2::aes(
-      yintercept = .data$mean + .data$sd
-    ),
-    color = "darkgreen",
-    linetype = "solid"
-    ) +
-    ggplot2::geom_hline(ggplot2::aes(
-      yintercept = .data$mean - .data$sd
-    ),
-    color = "darkgreen",
-    linetype = "solid"
-    ) +
-    ggplot2::geom_hline(ggplot2::aes(
-      yintercept = .data$mean
-    ),
-    color = "darkgreen",
-    linetype = "dotted"
-    ) +
-    ggplot2::geom_point() +
-    ggplot2::geom_path() +
-    ggplot2::xlim(c(1996, 2023)) +
-    ggplot2::scale_y_continuous(labels = scales::comma) +
-    ggplot2::scale_x_continuous(breaks = c(1980, 1990, 2000, 2010, 2020, 2025),
-                                limits = c(1970, 2025)) +
-    ggplot2::theme_classic(base_size = 16) +
-    ggplot2::theme(strip.text = ggplot2::element_text(size = 16),
-                   axis.title = ggplot2::element_blank(),
-                   aspect.ratio = 1/4) 
-  
-  return(plt)
-}
-
-##plot
-plt_indicator_gsi(gsi)
+NEesp2::plt_indicator(data = gsi,
+                      ar = 1/4,
+                      include_trends = TRUE) 
 ```
 
 
@@ -263,17 +240,19 @@ From ESP: "Reproductive rate (recruits per spawner) of American plaice is signif
 
 1-2 year lag effect on recruitment
 
+#### NAO 2 YEAR LAG
 ```{r}
-nao <- read.csv(here::here('01_inputs/nao_index.csv'))
-
-nao_yearly <- nao |>
+nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::mutate(yearly_nao = rowMeans(dplyr::across(Jan:Dec), na.rm = TRUE))|>
   dplyr::filter(Year >= 1970) |>
-  dplyr::rename(YEAR = Year, DATA_VALUE = yearly_nao) |>
+  dplyr::rename(YEAR = Year) |>
   dplyr::mutate(INDICATOR_NAME = "yearly_nao") |>
-  dplyr::select(YEAR, DATA_VALUE, INDICATOR_NAME)
+  dplyr::select(YEAR, yearly_nao, INDICATOR_NAME) |>
+  dplyr::arrange(YEAR) |>
+  dplyr::mutate(NAO_lag2 = dplyr::lag(yearly_nao, n = 2)) |>
+  dplyr::rename(DATA_VALUE = NAO_lag2)
 
-NEesp2::plt_indicator(data = nao_yearly,
+NEesp2::plt_indicator(data = nao,
                       ar = 1/4,
                       include_trends = TRUE) 
 ```
@@ -288,22 +267,39 @@ From ESP: "AMO was the most prevalent significant variable between both the cond
 
 AMO has been greater than +1 SD of the long term mean since 2020, indicating possible better condition and recruitment for plaice.
 
+#### AMO 6 months prior to fall survey (April-September)
 ```{r}
-amo <- read.csv(here::here('01_inputs/amo_index.csv'))
-
-amo_yearly <- amo |>
-  dplyr::group_by(Year) |>
-  dplyr::summarize(Average_SSTA = mean(SSTA, na.rm = TRUE)) |>
+fall_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
   dplyr::filter(Year >= 1970) |>
-  dplyr::rename(YEAR = Year, DATA_VALUE = Average_SSTA) |>
-  dplyr::mutate(INDICATOR_NAME = "yearly_amo")
+  dplyr::filter(Month %in% 4:9) |>
+  dplyr::group_by(Year) |>
+  dplyr::summarize(DATA_VALUE = mean(SSTA, na.rm = TRUE)) |>
+  dplyr::rename(YEAR = Year) |>
+  dplyr::mutate(INDICATOR_NAME = "fall_amo")
 
-NEesp2::plt_indicator(data = amo_yearly,
+NEesp2::plt_indicator(data = fall_amo,
                       ar = 1/4,
                       include_trends = TRUE)  
 ```
 
-## Condition
+#### AMO 6 months prior to spring survey (September - February)
+```{r}
+spring_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
+  dplyr::filter(Year >= 1970) |>
+  dplyr::filter(Month %in% c(9, 10, 11, 12, 1, 2)) |>
+  dplyr::mutate(Season_Start_Year = ifelse(Month %in% c(1, 2), Year - 1, Year)) |>
+  dplyr::group_by(Season_Start_Year) |>
+  dplyr::summarize(DATA_VALUE = mean(SSTA, na.rm = TRUE),
+                   Months_Count = dplyr::n()) |> # keeps track of how many months went into the average
+  dplyr::rename(YEAR = Season_Start_Year) |>
+  dplyr::mutate(INDICATOR_NAME = "spring_amo")
+
+NEesp2::plt_indicator(data = spring_amo,
+                      ar = 1/4,
+                      include_trends = TRUE) 
+```
+
+### Condition
 
 ```{r condition}
 #| fig-width: 7
