@@ -98,15 +98,8 @@ NEesp2::plt_indicator(data = vesselrev,
 
 Water temperatures control spawning; optimum spawning temperatures range between 3-6C but can thrive from -0.5 to 13C. Spawning occurs from March - June, peaking in April/May. Distribution appears to be defined by warm summer and fall temperatures. 
 
-From ESP: "Bottom temperature anomaly and SSB were both significant factors influencing plaice shift to deeper and more northward distribution." 
-
-March-August bottom temperature anomaly affects recruitment.
-Annual bottom temp anomaly leading up to spring survey (March-February) affects mean latitude.
-Annual bottom temp anomaly leading up to fall survey (Sept-August) affects mean latitude and fall condition.
-
-
-Temperatures in the stock area are near the long-term mean for all months in 2025, down from a peak in temperatures from 2020-2023 and 10+ years above the LT mean. 
-
+From ESP: "Bottom temperature anomaly is a significant factor influencing depth of occurrence, with plaice shifting deeper and a more northward distribution with increasing bottom temperature. Mean latitude has gradually shifted northward since the late 1990s and bottom temperature anomaly
+was found to have a significant positive influence on the center of gravity of plaice in both fall and spring distribution models. Bottom temperature exhibited a significant, positive relationship on weight-at-age of plaice at age one (fall model), however, there was a negative relationship between WAA and bottom temperature at older ages when significant. "
 ```{r plaice-bt-data}
 url1 <- here::here("01_inputs/AMERICANPLAICE_hubert_bottomT.csv")
 url2 <- here::here("01_inputs/AMERICANPLAICE_glorys_bottomT.csv")
@@ -115,7 +108,9 @@ bt_data <- read.csv(url1) |>
   dplyr::bind_rows(read.csv(url2))
 ```
 
-#### SEASONAL (RECRUITMENT) = MAR - AUG
+#### SEASONAL BOTTOM TEMP (MAR - AUG)
+
+March-August bottom temperature anomaly affects recruitment. Much of the 2010s were warmer than the long term mean, with seasonal highs greater than 8C and reaching 9C in 2020, higher than the optimal spawning temperatures. The last few years have been around or below the long term mean, which may be beneficial for plaice recruitment.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -134,6 +129,8 @@ NEesp2::plt_indicator(data = seasonal_bt,
 ```
 
 #### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
+
+Annual bottom temp anomaly leading up to fall survey (Sept-August) affects mean latitude and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Annual mean temperatures prior to the fall survey since 2023, however, have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may be contributing to the northward shift in plaice distribution and changes in fish condition.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -155,6 +152,8 @@ NEesp2::plt_indicator(data = fall_bt,
 ```
 
 #### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
+
+Annual bottom temp anomaly leading up to spring survey (March-February) affects mean latitude. Annual temperatures (Mar-Feb) have been above the long-term mean since 2012, peaking 2020. The last few years have been near or below the long-term mean. Greater than average annual temperatures prior to the spring survey in the last 15 years may contribute to a northward shift in plaice distribution, however declining temperatures in 2023-2025 may suggest a shift back to lower latitudes.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -177,12 +176,14 @@ NEesp2::plt_indicator(data = spring_bt,
 
 ### Sea Surface Temperature 
 
-Sea surface temperature is an important consideration for plaice recruitment. The thermal limit for survival and incubation of American plaice eggs is 14C, and recent sea surface temperatures in late spring-early summer (the end of the spawning season) have exceeded that threshold. 
-
-March-June SST anomaly affects recruitment
+Sea surface temperature is an important consideration for plaice recruitment and egg and larval survival. The thermal limit for survival and incubation of American plaice eggs is 14C.
 
 #### SEASONAL = MAR - JUNE 
 
+***remove 2026? or check back to see if data is updated through end of june***
+
+***
+March-June SST anomaly affects plaice recruitment. Spring temperatures have hovered around 7-8C since the early 1980s, however temperatures in more recent years are exceeding the long-term mean. Seasonal temperatures have declined since 2022, which may be beneficial for plaice recruitment.
 ```{r}
 #| fig-width: 7
 #| fig-align: center
@@ -206,9 +207,10 @@ Currents, changes in circulation patterns, and shelf-slope dynamics are responsi
 
 When the strength of Labrador current is weak, a higher proportion of warm water coming from the Gulf Stream enters the Gulf of Maine, increasing Gulf of Maine water temperatures. The position of the Gulf Stream has shifted northward and the Gulf of Maine has seen temperature warming rates much higher than that of the global average in recent decades.
 
-The annual mean of the Gulf Stream position leading up to fall survey affects recruitment.
+From ESP: "GSI was a significant driver of recruitment in the fall. GSI explained more deviance in weight-at-age trends at younger ages and tended to exhibite a positive relationship on WAA."
 
-#### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
+#### ANNUAL MEAN GULF STREAM POSITION PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
+The annual mean of the Gulf Stream position leading up to fall survey affects recruitment. There is an overall long-term increasing trend in the position of the Gulf Stream since 1970, with the Gulf Stream being further north than the long-term mean in recent years. The Gulf Stream has been at or above the long-term mean since 2020, which may be contributing to warmer water temperatures in the Gulf of Maine and affecting plaice recruitment.
 ```{r}
 gsi <- ecodata::gsi |>
   tidyr::separate(Time, c("Year", "Month"), sep = "\\.") |>
@@ -237,11 +239,11 @@ NEesp2::plt_indicator(data = gsi,
 
 ### NAO Index
 
-From ESP: "Reproductive rate (recruits per spawner) of American plaice is significantly related to temperature and the North Atlantic Oscillation, where greatest recruitment rates occur at extreme cold temperatures.
+From ESP: "Reproductive rate (recruits per spawner) of American plaice is significantly related to temperature and the North Atlantic Oscillation, where greatest recruitment rates occur at extreme cold temperatures. NAO has a significant affect on depth of occurrence in the fall."
 
-1-2 year lag effect on recruitment
 
 #### NAO 2 YEAR LAG
+The North Atlantic Oscillation (NAO)  index is a measure of the strength and position of the westerly winds across the North Atlantic. Strong positive phases of the NAO tend to be associated with above-normal temperatures in the eastern United States. The NAO index 1-2 year lag effect on American plaice recruitment. The NAO index (lagged 2 years) has remained near the long-term mean throughout much of the time series (since 1970), with a few years of extreme negative NAO values early 2010s and extreme positive NAO values in 2020.
 ```{r}
 nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::mutate(yearly_nao = rowMeans(dplyr::across(Jan:Dec), na.rm = TRUE))|>
@@ -261,14 +263,15 @@ NEesp2::plt_indicator(data = nao,
 
 ### AMO Index
 
-From ESP: "AMO was the most prevalent significant variable between both the condition index and WAA analyses, higher AMO = better condition and weight at age. Recruits per spawner increased with increasing AMO values up to a point, but then declined." 
-
-6 months AMO prior to fall survey affects recruitment and fall condition
-6 months AMO prior to spring survey affects recruitment
+From ESP: 
+  - AMO was the most prevalent significant variable between both the condition index and WAA analyses, higher AMO = better condition and weight at age. Recruits per spawner increased with increasing AMO values up to a point, but then declined.
+  - AMO explained the most deviance in both fall and spring recruitment models. 
+  - AMO was the most consistent significant variable across the age classes with a tendency for more variance explained in deviance of weight-at-age in older ages and a negative relationship with increasing AMO.
 
 AMO has been greater than +1 SD of the long term mean since 2020, indicating possible better condition and recruitment for plaice.
 
 #### AMO 6 months prior to fall survey (April-September)
+6 months AMO prior to fall survey (Apr-Sept) affects recruitment and fall condition. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the early 2020s. The AMO index has been above the long-term mean since 2020, which may be contributing to better plaice condition and recruitment.
 ```{r}
 fall_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
   dplyr::filter(Year >= 1970) |>
@@ -284,6 +287,7 @@ NEesp2::plt_indicator(data = fall_amo,
 ```
 
 #### AMO 6 months prior to spring survey (September - February)
+6 months AMO prior to spring survey (Sept-Feb) affects recruitment. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the 2023 and 2024. The AMO index has been above the long-term mean since 2020, which may be contributing to higher recruitment.
 ```{r}
 spring_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
   dplyr::filter(Year >= 1970) |>
@@ -301,7 +305,10 @@ NEesp2::plt_indicator(data = spring_amo,
 ```
 
 ### Condition
+Condition of American plaice exhibited lows in the 2000s to 2010, indicating thinner, less-quality fish especially in the Gulf of Maine. Condition values have increased overall since 2010, with most fish on Georges Bank in above average or good condition. Condition of American plaice in the Gulf of Maine and Scotian Shelf vary, but are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 
+From ESP: "SSB had the most significant influence on mean
+condition, followed by annual bottom temperature anomaly, and a 6-month mean AMO variable. Plaice condition increased with increasing SSB and bottom temperature, but exhibited a curvilinear response to AMO."
 ```{r condition}
 #| fig-width: 7
 #| fig-height: 3
