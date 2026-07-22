@@ -326,3 +326,10 @@ NEesp2::plot_condition(data = data,
   ggplot2::theme(legend.position = "bottom")
 ```
 
+## Key Takeaways
+
+- The fishery is consolidating into fewer vessels, with fewer landings and lower revenue, but higher revenue per vessel.
+- Recent cooling in bottom temperatures may be beneficial for plaice recruitment, but it is unclear how long this cooling will last.
+- Warmer temperatures in the 2010s and early 2020s may have contributed to northward shifts in distribution and lower condition.
+- A positive trend in AMO may result in lower weight-at-age, a northward shift in distribution in spring, and lower recruits per spawner.
+
