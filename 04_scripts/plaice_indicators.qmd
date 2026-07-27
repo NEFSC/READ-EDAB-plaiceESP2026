@@ -1,15 +1,13 @@
 ---
 title: "American Plaice Indicators for Fall 2026 Management Track"
-# format:
-#   html:
-#     code-fold: true
 format:
-  # pdf:
-  #   fig-width: 7
-  #   fig-height: 5
-  html
+  pdf:
+    fig-width: 7
+    fig-height: 5
+#  html
 execute:
   echo: false
+  execute-dir: project
 ---
 
 ```{r setup}
@@ -21,6 +19,14 @@ knitr::opts_chunk$set(
 ```
 
 # American Plaice
+
+## Distribution Map
+```{r}
+#| fig-width: 7
+#| fig.height: 7
+#| fig-align: center
+knitr::include_graphics("../05_images/dist_plot.png")
+```
 
 ## Socioeconomic Indicators 
 
@@ -94,12 +100,31 @@ NEesp2::plt_indicator(data = vesselrev,
 
 ## Ecosystem Indicators
 
+### Mean Latitude
+
+From DisMAP (1974-2024): "Shifts in the distributions are measured as change in latitude and change in depth. Capturing these shifts of particular stocks can have significant impacts on management decisions, particularly in a changing environment. For this module, data is harnessed from regional surveys* and filtered to include taxa that are sampled in at least 5% of tows in at least 3/4th of all survey years"
+
+#### Survey Catch in Fall
+```{r}
+#| fig-width: 7
+#| fig.height: 7
+#| fig-align: center
+knitr::include_graphics("../05_images/plaice_dist_fall.png")
+```
+
+#### Survey Catch in Spring
+```{r}
+#| fig-width: 7
+#| fig.height: 7
+#| fig-align: center
+knitr::include_graphics("../05_images/plaice_dist_spring.png")
+```
 
 ### Bottom temperature
 
 Water temperatures control spawning; optimum spawning temperatures range between 3-6°C but plaice can tolerate -0.5 to 13°C. Spawning occurs from March - June, peaking in April/May. Distribution appears to be regulated by warm summer and fall temperatures. 
 
-From the 2022 ESP: "Bottom temperature anomaly is a significant factor influencing depth of occurrence, with plaice shifting deeper and a more northward distribution with increasing bottom temperature. Mean latitude has gradually shifted northward since the late 1990s and bottom temperature anomaly
+From the 2022 ESP: "Bottom temperature anomaly is a significant factor influencing depth of occurrence, with plaice shifting deeper and a more northward distribution with increasing bottom temperature. Mean latitude (both fall and spring) has gradually shifted northward since the late 1990s and bottom temperature anomaly
 was found to have a significant positive influence on the center of gravity of plaice in both fall and spring distribution models. Bottom temperature exhibited a significant, positive relationship on weight-at-age of plaice at age one (fall model), however, there was a negative relationship between WAA and bottom temperature at older ages when significant. "
 ```{r plaice-bt-data}
 url1 <- here::here("01_inputs/AMERICANPLAICE_hubert_bottomT.csv")
@@ -131,7 +156,7 @@ NEesp2::plt_indicator(data = seasonal_bt,
 
 #### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
 
-Annual bottom temp anomaly leading up to fall survey (Sept-August) is correlated with the mean latitude where plaice are found and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may be contributing to the northward shift in plaice distribution and changes in fish condition.
+Annual bottom temp anomaly leading up to fall survey (October of year-1 to September of year 0) is correlated with the mean latitude where plaice are found (fall and spring) and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may be contributing to the northward shift in plaice distribution and changes in fish condition.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -154,7 +179,7 @@ NEesp2::plt_indicator(data = fall_bt,
 
 #### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
 
-Annual bottom temp anomaly leading up to spring survey (March-February) is correlated with the mean latitude where plaice are found. Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. Greater than average annual temperatures prior to the spring survey in the last 15 years may contribute to a northward shift in plaice distribution, however declining temperatures in 2023-2025 may suggest a shift back to lower latitudes.
+Annual bottom temp anomaly leading up to spring survey (March-February) is correlated with the mean latitude where plaice are found (fall and spring). Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. Greater than average annual temperatures prior to the spring survey in the last 15 years may contribute to a northward shift in plaice distribution, however declining temperatures in 2023-2025 may suggest a shift back to lower latitudes.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -245,6 +270,8 @@ From working paper: "Reproductive rate (recruits per spawner) of American plaice
 
 #### NAO 2 YEAR LAG
 The North Atlantic Oscillation (NAO)  index is a measure of the strength and position of the westerly winds across the North Atlantic. Strong positive phases of the NAO tend to be associated with above-normal temperatures in the eastern United States. The NAO index has a 1-2 year lag effect on American plaice recruitment. The NAO index has remained near the long-term mean throughout much of the time series (since 1970), with a few years of extreme negative NAO values early 2010s and extreme positive NAO values in 2020.
+
+NAO (6 month mean) was significantly related to mean latitude in the spring. 
 ```{r}
 nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::mutate(yearly_nao = rowMeans(dplyr::across(Jan:Dec), na.rm = TRUE))|>
@@ -270,34 +297,37 @@ From working paper:
   - AMO was the most prevalent significant variable between both the condition index and WAA analyses, higher AMO = better condition and weight at age. Recruits per spawner increased with increasing AMO values up to a point, but then declined.
   - AMO explained the most deviance in both fall and spring recruitment models. 
   - AMO was the most consistent significant variable across the age classes with a tendency for more variance explained in deviance of weight-at-age in older ages and a negative relationship with increasing AMO.
+  - AMO correlated with mean latitude in fall bottom trawl surveys
 
 AMO has been greater than +1 SD of the long term mean since 2020, indicating possible better condition and recruitment for plaice.
+
+AMO (short, unsmoothed) data from https://psl.noaa.gov/data/correlation/amon.us.data. Last updated January 2023.
 
 #### AMO 6 months prior to fall survey (April-September)
 6 months AMO prior to fall survey (Apr-Sept) affects recruitment and fall condition. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the early 2020s. The AMO index has been above the long-term mean since 2020, which may be contributing to better plaice condition and recruitment, or AMO may have crossed the tipping point for plaice and could be negatively impacting recruitment.
 ```{r}
-fall_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
+fall_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
   dplyr::filter(Year >= 1970) |>
   dplyr::filter(Month %in% 4:9) |>
   dplyr::group_by(Year) |>
-  dplyr::summarize(DATA_VALUE = mean(SSTA, na.rm = TRUE)) |>
+  dplyr::summarize(DATA_VALUE = mean(Value, na.rm = TRUE)) |>
   dplyr::rename(YEAR = Year) |>
   dplyr::mutate(INDICATOR_NAME = "fall_amo")
 
 NEesp2::plt_indicator(data = fall_amo,
                       ar = 1/4,
-                      include_trends = TRUE)  
+                      include_trends = TRUE) 
 ```
 
 #### AMO 6 months prior to spring survey (September - February)
 6 months AMO prior to spring survey (Sept-Feb) affects recruitment. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the 2023 and 2024. The AMO index has been above the long-term mean since 2020, which may be contributing to higher recruitment, or AMO may have crossed the tipping point for plaice and could be negatively impacting recruitment.
 ```{r}
-spring_amo <- read.csv(here::here('01_inputs/amo_index.csv')) |>
+spring_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
   dplyr::filter(Year >= 1970) |>
   dplyr::filter(Month %in% c(9, 10, 11, 12, 1, 2)) |>
   dplyr::mutate(Season_Start_Year = ifelse(Month %in% c(1, 2), Year - 1, Year)) |>
   dplyr::group_by(Season_Start_Year) |>
-  dplyr::summarize(DATA_VALUE = mean(SSTA, na.rm = TRUE),
+  dplyr::summarize(DATA_VALUE = mean(Value, na.rm = TRUE),
                    Months_Count = dplyr::n()) |> # keeps track of how many months went into the average
   dplyr::rename(YEAR = Season_Start_Year) |>
   dplyr::mutate(INDICATOR_NAME = "spring_amo")
