@@ -22,8 +22,7 @@ knitr::opts_chunk$set(
 
 ## Distribution Map
 ```{r}
-#| fig-width: 7
-#| fig.height: 7
+#| out-width: "50%"
 #| fig-align: center
 knitr::include_graphics("../05_images/dist_plot.png")
 ```
@@ -106,16 +105,14 @@ From DisMAP (1974-2024): "Shifts in the distributions are measured as change in 
 
 #### Survey Catch in Fall
 ```{r}
-#| fig-width: 7
-#| fig.height: 7
+#| out-width: "75%"
 #| fig-align: center
 knitr::include_graphics("../05_images/plaice_dist_fall.png")
 ```
 
 #### Survey Catch in Spring
 ```{r}
-#| fig-width: 7
-#| fig.height: 7
+#| out-width: "75%"
 #| fig-align: center
 knitr::include_graphics("../05_images/plaice_dist_spring.png")
 ```
