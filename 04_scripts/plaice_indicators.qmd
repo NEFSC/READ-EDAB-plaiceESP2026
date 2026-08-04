@@ -44,7 +44,12 @@ avgprice <- data |>
 
 NEesp2::plt_indicator(data = avgprice,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ### Total commercial landings (pounds)
@@ -58,7 +63,12 @@ NEesp2::plt_indicator(data = landings,
                       include_trends = FALSE) +
   ggplot2::geom_smooth(method = "lm", se = FALSE, color = "purple", linetype = "solid") +
   ggplot2::geom_line() +
-  ggplot2::geom_point() 
+  ggplot2::geom_point()  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ### Total commercial revenue
@@ -72,7 +82,12 @@ NEesp2::plt_indicator(data = totalrev,
                       include_trends = FALSE)  +
   ggplot2::geom_smooth(method = "lm", se = FALSE, color = "purple", linetype = "solid") +
   ggplot2::geom_line() +
-  ggplot2::geom_point() 
+  ggplot2::geom_point()  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ### Number of commercial vessels
@@ -83,7 +98,15 @@ nvessels <- data |>
 
 NEesp2::plt_indicator(data = nvessels,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = FALSE)   +
+  ggplot2::geom_smooth(method = "lm", se = FALSE, color = "purple", linetype = "solid") +
+  ggplot2::geom_line() +
+  ggplot2::geom_point()  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+    )
 ```
 
 ### Average revenue per vessel ($USD2025)
@@ -94,7 +117,12 @@ vesselrev <- data |>
 
 NEesp2::plt_indicator(data = vesselrev,
                       ar = 1/4,
-                      include_trends = TRUE)
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ## Ecosystem Indicators
@@ -133,6 +161,8 @@ bt_data <- read.csv(url1) |>
 
 #### SEASONAL BOTTOM TEMP (MAR - AUG)
 
+***NOTE: update BT data or remove 2026 data if not full year***
+
 As described in the 2022 working paper, March-August bottom temperature anomaly affects plaice recruitment. Much of the 2010s were warmer than the long term mean, with seasonal highs greater than 8°C and reaching 9°C in 2020, higher than the optimal spawning temperatures. The last few years have been around or below the long term mean, which may be beneficial for plaice recruitment.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
@@ -147,11 +177,18 @@ seasonal_bt <- bt_data |>
 
 NEesp2::plt_indicator(data = seasonal_bt,
                       ar = 1/4,
-                      include_trends = TRUE)  
+                      include_trends = TRUE) +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
   
 ```
 
 #### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
+
+***NOTE: update BT data or remove 2026 data if not full year***
 
 Annual bottom temp anomaly leading up to fall survey (October of year-1 to September of year 0) is correlated with the mean latitude where plaice are found (fall and spring) and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may be contributing to the northward shift in plaice distribution and changes in fish condition.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
@@ -171,10 +208,17 @@ fall_bt <- bt_data |>
 
 NEesp2::plt_indicator(data = fall_bt,
                       ar = 1/4,
-                      include_trends = TRUE)
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 #### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
+
+***NOTE: update BT data or remove 2026 data if not full year***
 
 Annual bottom temp anomaly leading up to spring survey (March-February) is correlated with the mean latitude where plaice are found (fall and spring). Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. Greater than average annual temperatures prior to the spring survey in the last 15 years may contribute to a northward shift in plaice distribution, however declining temperatures in 2023-2025 may suggest a shift back to lower latitudes.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
@@ -194,7 +238,12 @@ spring_bt <- bt_data |>
 
 NEesp2::plt_indicator(data = spring_bt,
                       ar = 1/4,
-                      include_trends = TRUE)
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ### Sea Surface Temperature 
@@ -203,10 +252,7 @@ Sea surface temperature is an important consideration for plaice recruitment and
 
 #### SEASONAL = MAR - JUNE 
 
-***remove 2026? or check back to see if data is updated through end of june***
-
-***
-March-June SST anomaly affects plaice recruitment. Spring temperatures have hovered around 7-8°C since the early 1980s, however temperatures in the early 2020s exceeded the long-term mean. Seasonal temperatures have declined since 2022, which may be beneficial for plaice recruitment.
+March-June SST anomaly affects plaice recruitment. Spring temperatures have hovered around 7-8°C since the early 1980s, however temperatures in the early 2020s exceeded the long-term mean. Seasonal temperatures have declined since 2022, which may be beneficial for plaice recruitment, however there is a long-term increasing trend in sea surface temperatures. 
 ```{r}
 #| fig-width: 7
 #| fig-align: center
@@ -220,7 +266,12 @@ seasonal_sst <- read.csv(here::here('01_inputs/AMERICANPLAICE_sst.csv')) |>
 
 NEesp2::plt_indicator(data = seasonal_sst,
                       ar = 1/4,
-                      include_trends = TRUE)
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 
@@ -255,7 +306,12 @@ gsi <- ecodata::gsi |>
 
 NEesp2::plt_indicator(data = gsi,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 
@@ -283,7 +339,12 @@ nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
 
 NEesp2::plt_indicator(data = nao,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 
@@ -313,7 +374,12 @@ fall_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
 
 NEesp2::plt_indicator(data = fall_amo,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2022)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 #### AMO 6 months prior to spring survey (September - February)
@@ -331,7 +397,12 @@ spring_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
 
 NEesp2::plt_indicator(data = spring_amo,
                       ar = 1/4,
-                      include_trends = TRUE) 
+                      include_trends = TRUE)  +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2022)) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  )
 ```
 
 ### Condition
@@ -344,12 +415,18 @@ condition, followed by annual bottom temperature anomaly, and a 6-month mean AMO
 #| fig-height: 8
 #| fig-align: center
 
-data <- read.csv(here::here("03_outputs/plaice_condition.csv"))
+data <- read.csv(here::here("03_outputs/plaice_condition.csv")) |>
+  dplyr::group_by(Species, YEAR, INDICATOR_NAME) |>
+  dplyr::summarise(
+    DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  dplyr::mutate(EPU = "ALL")
 
 NEesp2::plot_condition(data = data,
                        var = "American plaice", 
                        return = TRUE) +
-  ggplot2::facet_wrap(~EPU, ncol = 1) +
+  # ggplot2::facet_wrap(~EPU, ncol = 1) +
   ggplot2::theme(legend.position = "bottom")
 ```
 
