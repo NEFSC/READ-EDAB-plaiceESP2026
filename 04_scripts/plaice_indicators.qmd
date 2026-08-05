@@ -1,13 +1,15 @@
 ---
 title: "American Plaice Indicators for Fall 2026 Management Track"
 format:
-  pdf:
-    fig-width: 7
-    fig-height: 5
-#  html
+  # pdf:
+  #   fig-width: 7
+  #   fig-height: 5
+ html:
+    embed-resources: true 
 execute:
   echo: false
   execute-dir: project
+
 ---
 
 ```{r setup}
@@ -24,12 +26,12 @@ knitr::opts_chunk$set(
 ```{r}
 #| out-width: "50%"
 #| fig-align: center
-knitr::include_graphics("../05_images/dist_plot.png")
+knitr::include_graphics("../05_images/plaice_map.png")
 ```
 
 ## Socioeconomic Indicators 
 
-Average price per pound, total landings (lbs), commercial revenue, and n vessels are all below the long term mean, declining since 2020. However, landings and revenue have rebounded slightly. Average revenue per vessel, which had been declining since the mid-2010s to a low in 2020, has risen well above the long-term mean after 2022. 
+Average price per pound, total landings (lbs), commercial revenue, and number of vessels are all below the long term mean, declining since 2020 or earlier. However, landings and revenue have rebounded slightly. Average revenue per vessel, which had been declining since the mid-2010s to a low in 2020, has risen well above the long-term mean after 2022. 
 
 ```{r plaice-socioeco}
 plaice_socioeco <- here::here("01_inputs/AMERICANPLAICE_Commercial_Indicators_Master.csv")
@@ -127,9 +129,13 @@ NEesp2::plt_indicator(data = vesselrev,
 
 ## Ecosystem Indicators
 
+Indicators were identified in [Behan and Kerr 2022](https://repository.library.noaa.gov/view/noaa/66452).
+
 ### Mean Latitude
 
 From DisMAP (1974-2024): "Shifts in the distributions are measured as change in latitude and change in depth. Capturing these shifts of particular stocks can have significant impacts on management decisions, particularly in a changing environment. For this module, data is harnessed from regional surveys* and filtered to include taxa that are sampled in at least 5% of tows in at least 3/4th of all survey years"
+
+For plaice, the magnitude of mean latitude change is small, so it probably doesn't make sense to emphasize a directional shift.
 
 #### Survey Catch in Fall
 ```{r}
@@ -150,7 +156,8 @@ knitr::include_graphics("../05_images/plaice_dist_spring.png")
 Water temperatures control spawning; optimum spawning temperatures range between 3-6°C but plaice can tolerate -0.5 to 13°C. Spawning occurs from March - June, peaking in April/May. Distribution appears to be regulated by warm summer and fall temperatures. 
 
 From the 2022 ESP: "Bottom temperature anomaly is a significant factor influencing depth of occurrence, with plaice shifting deeper and a more northward distribution with increasing bottom temperature. Mean latitude (both fall and spring) has gradually shifted northward since the late 1990s and bottom temperature anomaly
-was found to have a significant positive influence on the center of gravity of plaice in both fall and spring distribution models. Bottom temperature exhibited a significant, positive relationship on weight-at-age of plaice at age one (fall model), however, there was a negative relationship between WAA and bottom temperature at older ages when significant. "
+was found to have a significant positive influence on the center of gravity of plaice in both fall and spring distribution models. Bottom temperature exhibited a significant, positive relationship on weight-at-age of plaice at age one (fall model), however, there was a negative relationship between WAA and bottom temperature at older ages when significant."
+
 ```{r plaice-bt-data}
 url1 <- here::here("01_inputs/AMERICANPLAICE_hubert_bottomT.csv")
 url2 <- here::here("01_inputs/AMERICANPLAICE_glorys_bottomT.csv")
@@ -190,7 +197,7 @@ NEesp2::plt_indicator(data = seasonal_bt,
 
 ***NOTE: update BT data or remove 2026 data if not full year***
 
-Annual bottom temp anomaly leading up to fall survey (October of year-1 to September of year 0) is correlated with the mean latitude where plaice are found (fall and spring) and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may be contributing to the northward shift in plaice distribution and changes in fish condition.
+Annual bottom temp anomaly leading up to fall survey (October of year-1 to September of year 0) is positively correlated with the mean latitude where plaice are found in the fall and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may eventually result in changes in plaice distribution and condition.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -220,7 +227,7 @@ NEesp2::plt_indicator(data = fall_bt,
 
 ***NOTE: update BT data or remove 2026 data if not full year***
 
-Annual bottom temp anomaly leading up to spring survey (March-February) is correlated with the mean latitude where plaice are found (fall and spring). Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. Greater than average annual temperatures prior to the spring survey in the last 15 years may contribute to a northward shift in plaice distribution, however declining temperatures in 2023-2025 may suggest a shift back to lower latitudes.
+Annual bottom temp anomaly leading up to spring survey (March-February) is positively correlated with the mean latitude where plaice are found in the spring. Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. 
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
@@ -362,7 +369,7 @@ AMO has been greater than +1 SD of the long term mean since 2020, indicating pos
 AMO (short, unsmoothed) data from https://psl.noaa.gov/data/correlation/amon.us.data. Last updated January 2023.
 
 #### AMO 6 months prior to fall survey (April-September)
-6 months AMO prior to fall survey (Apr-Sept) affects recruitment and fall condition. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the early 2020s. The AMO index has been above the long-term mean since 2020, which may be contributing to better plaice condition and recruitment, or AMO may have crossed the tipping point for plaice and could be negatively impacting recruitment.
+6 months AMO prior to fall survey (Apr-Sept) affects recruitment and fall condition. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the early 2020s. The AMO index has been above the long-term mean since 2020. AMO values below 0 and above 0.25 are associated with lower recruitment, while values between approximately 0-0.25 are associated with higher recruitment (Behan and Kerr 2022, fig. 2). Recent AMO values are positive, with some being above the transition point of ~0.25, so impacts on recruitment may be mixed.
 ```{r}
 fall_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
   dplyr::filter(Year >= 1970) |>
@@ -383,7 +390,7 @@ NEesp2::plt_indicator(data = fall_amo,
 ```
 
 #### AMO 6 months prior to spring survey (September - February)
-6 months AMO prior to spring survey (Sept-Feb) affects recruitment. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the 2023 and 2024. The AMO index has been above the long-term mean since 2020, which may be contributing to higher recruitment, or AMO may have crossed the tipping point for plaice and could be negatively impacting recruitment.
+6 months AMO prior to spring survey (Sept-Feb) affects recruitment. There is a long-term increasing trend in the AMO index (Apr-Sept), with recent peaks in the 2023 and 2024. The AMO index has been above the long-term mean since 2020, which may be contributing to higher recruitment. Unlike the fall AMO, the impact of the spring AMO on recruitment does not become negative at higher values (Behan and Kerr 2022, fig. 3), so recent spring AMO values indicate favorable conditions for plaice recruitment.
 ```{r}
 spring_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
   dplyr::filter(Year >= 1970) |>
@@ -408,8 +415,7 @@ NEesp2::plt_indicator(data = spring_amo,
 ### Condition
 Condition of American plaice exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish, especially in the Gulf of Maine. Condition values have increased overall since 2010, with most fish on Georges Bank in above average or good condition. Condition of American plaice in the Gulf of Maine and Scotian Shelf vary, but are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 
-From ESP: "SSB had the most significant influence on mean
-condition, followed by annual bottom temperature anomaly, and a 6-month mean AMO variable. Plaice condition increased with increasing SSB and bottom temperature, but exhibited a curvilinear response to AMO."
+From ESP: "SSB had the most significant influence on mean condition, followed by annual bottom temperature anomaly, and a 6-month mean AMO variable. Plaice condition increased with increasing SSB and bottom temperature, but exhibited a curvilinear response to AMO."
 ```{r condition}
 #| fig-width: 7
 #| fig-height: 8
@@ -434,6 +440,6 @@ NEesp2::plot_condition(data = data,
 
 - The fishery is consolidating into fewer vessels, with fewer landings and lower revenue, but higher revenue per vessel.
 - Recent cooling in bottom temperatures may be beneficial for plaice recruitment, but it is unclear how long this cooling will last.
-- Warmer temperatures in the 2010s and early 2020s may have contributed to northward shifts in distribution and lower condition.
-- A positive trend in AMO may result in lower weight-at-age, a northward shift in distribution in spring, and lower recruits per spawner.
+- Warmer temperatures such as those seen in the 2010s and early 2020s may result in northward shifts in distribution and higher condition; however, effect sizes were small.
+- A positive trend in AMO may result in mixed effects on recruits per spawner.
 
