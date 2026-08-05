@@ -1,11 +1,11 @@
 ---
 title: "American Plaice Indicators for Fall 2026 Management Track"
 format:
-  # pdf:
-  #   fig-width: 7
-  #   fig-height: 5
- html:
-    embed-resources: true 
+  pdf:
+    fig-width: 7
+    fig-height: 5
+ # html:
+ #    embed-resources: true 
 execute:
   echo: false
   execute-dir: project
@@ -137,18 +137,34 @@ From DisMAP (1974-2024): "Shifts in the distributions are measured as change in 
 
 For plaice, the magnitude of mean latitude change is small, so it probably doesn't make sense to emphasize a directional shift.
 
-#### Survey Catch in Fall
+#### Survey Catch and Center of Gravity (Latitude) in Fall
 ```{r}
 #| out-width: "75%"
 #| fig-align: center
 knitr::include_graphics("../05_images/plaice_dist_fall.png")
+
+dismap_fall <- read.csv(here::here('01_inputs/plaice_dismap_fall.csv')) |>
+  dplyr::rename(DATA_VALUE = COG.Lat) |>
+  dplyr::mutate(INDICATOR_NAME = "COG.Lat")
+
+NEesp2::plt_indicator(data = dismap_fall,
+                      ar = 1/4,
+                      include_trends = TRUE)
 ```
 
-#### Survey Catch in Spring
+#### Survey Catch and Center of Gravity (Latitude) in Spring
 ```{r}
 #| out-width: "75%"
 #| fig-align: center
 knitr::include_graphics("../05_images/plaice_dist_spring.png")
+
+dismap_spring <- read.csv(here::here('01_inputs/plaice_dismap_spring.csv')) |>
+  dplyr::rename(DATA_VALUE = COG.Lat) |>
+  dplyr::mutate(INDICATOR_NAME = "COG.Lat")
+
+NEesp2::plt_indicator(data = dismap_spring,
+                      ar = 1/4,
+                      include_trends = TRUE)
 ```
 
 ### Bottom temperature
@@ -176,7 +192,7 @@ As described in the 2022 working paper, March-August bottom temperature anomaly 
 #| fig-align: center
 
 seasonal_bt <- bt_data |>
-  dplyr::filter(YEAR >= 1970) |>
+  dplyr::filter(YEAR %in% 1970:2025) |>
   dplyr::filter(MONTH %in% 3:8) |>
   dplyr::group_by(YEAR) |>
   dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE)) |>
@@ -186,7 +202,7 @@ NEesp2::plt_indicator(data = seasonal_bt,
                       ar = 1/4,
                       include_trends = TRUE) +
   ggplot2::scale_x_continuous(
-    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
@@ -195,15 +211,13 @@ NEesp2::plt_indicator(data = seasonal_bt,
 
 #### ANNUAL MEAN PRIOR TO FALL SURVEY = OCT(year-1) - SEPT
 
-***NOTE: update BT data or remove 2026 data if not full year***
-
 Annual bottom temp anomaly leading up to fall survey (October of year-1 to September of year 0) is positively correlated with the mean latitude where plaice are found in the fall and fall condition. There is a long-term increasing trend in annual bottom temperatures (Oct-Sept) since 1970, with highs above the long-term mean throughout much of the 2010s and early 2020s. Since 2023, annual mean temperatures prior to the fall survey have declined from recent highs and are near the long-term mean. An overall warming trend in bottom temperatures may eventually result in changes in plaice distribution and condition.
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
 
 fall_bt <- bt_data |>
-  dplyr::filter(YEAR >= 1970) |>
+  dplyr::filter(YEAR %in% 1970:2025) |>
   dplyr::group_by(YEAR) |>
   dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:8), YEAR - 1, YEAR)) |>
   dplyr::ungroup() |>
@@ -225,15 +239,13 @@ NEesp2::plt_indicator(data = fall_bt,
 
 #### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
 
-***NOTE: update BT data or remove 2026 data if not full year***
-
 Annual bottom temp anomaly leading up to spring survey (March-February) is positively correlated with the mean latitude where plaice are found in the spring. Annual temperatures (Mar-Feb) were above the long-term mean in the 2010s peaking 2020. The last few years have been near or below the long-term mean. 
 ```{r, eval = file.exists(url1) & file.exists(url2), results='asis'}
 #| fig-width: 7
 #| fig-align: center
 
 spring_bt <- bt_data |>
-  dplyr::filter(YEAR >= 1970) |>
+  dplyr::filter(YEAR %in% 1970:2025) |>
   dplyr::group_by(YEAR) |>
   dplyr::mutate(Season_Start_Year = ifelse(MONTH %in% c(1:2), YEAR - 1, YEAR)) |>
   dplyr::ungroup() |>
@@ -247,7 +259,7 @@ NEesp2::plt_indicator(data = spring_bt,
                       ar = 1/4,
                       include_trends = TRUE)  +
   ggplot2::scale_x_continuous(
-    breaks = c(seq(1970, 2020, by = 10), 2026)) +
+    breaks = c(seq(1970, 2020, by = 10), 2025)) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
@@ -413,7 +425,7 @@ NEesp2::plt_indicator(data = spring_amo,
 ```
 
 ### Condition
-Condition of American plaice exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish, especially in the Gulf of Maine. Condition values have increased overall since 2010, with most fish on Georges Bank in above average or good condition. Condition of American plaice in the Gulf of Maine and Scotian Shelf vary, but are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
+Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having neutral to good condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 
 From ESP: "SSB had the most significant influence on mean condition, followed by annual bottom temperature anomaly, and a 6-month mean AMO variable. Plaice condition increased with increasing SSB and bottom temperature, but exhibited a curvilinear response to AMO."
 ```{r condition}
