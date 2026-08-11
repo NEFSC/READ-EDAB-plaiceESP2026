@@ -87,6 +87,7 @@ NEesp2::plt_indicator(data = totalrev,
   ggplot2::geom_point()  +
   ggplot2::scale_x_continuous(
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
@@ -122,6 +123,7 @@ NEesp2::plt_indicator(data = vesselrev,
                       include_trends = TRUE)  +
   ggplot2::scale_x_continuous(
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
+  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )

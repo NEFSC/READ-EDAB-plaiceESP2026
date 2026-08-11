@@ -1,0 +1,6 @@
+﻿Indicator (units),Status ,Implications,Time Series,w,h
+"Bottom temperature (annual prior to Fall and Spring surveys, °C)",Near the long term mean (fall and spring),Add implications here (3-5 sentences),indicator_table/bt_annual_all.png,2.33,1.5
+Center of Gravity (Latitude),"Near the long term mean (fall), above the long term mean (spring)",Add implications here (3-5 sentences),indicator_table/lat_all.png,2.33,1.5
+Gulf Stream Index (annual mean prior to Fall survey),Near the long term mean,Add implications here (3-5 sentences),indicator_table/gsi.png,2.33,1
+Sea Surface Temperature (Mar-June) ,Near the long term mean,Add implications here (3-5 sentences),indicator_table/sst_mar_june.png,2.33,1
+AMO (6 months prior to Fall and Spring survey),Above the long term mean (fall and spring),Add implications here (3-5 sentences),indicator_table/amo_all.png,2.33,1.5

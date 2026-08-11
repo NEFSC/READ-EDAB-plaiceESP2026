@@ -1,5 +1,5 @@
 ---
-title: "Black Sea Bass (\\protect\\textit{Centropristis striata}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile"
+title: "American Plaice (\\protect\\textit{Hippoglossoides platessoides}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile"
 format: 
   pdf:
     margin-left: "0.5in"
@@ -14,13 +14,13 @@ format:
     papersize: letter
 params:
   widths: !expr c(0.9, 0.75, 3, 3)
-  img1: !expr here::here("inst/esp_template/05_images/noaa_logo.png")
-  img2: !expr here::here("inst/esp_template/05_images/noaa_logo.png")
-  img3: !expr here::here("inst/esp_template/05_images/noaa_logo.png")
-  tbl_file: !expr here::here("inst/esp_template/06_docs/table_template.csv")
-  img_dir: !expr here::here("inst/esp_template/05_images")
-  terminal_year: 2024
-  risk_url: https://static1.squarespace.com/static/511cdc7fe4b00307a2628ac6/t/6747560a3cf66936045e5547/1732728332670/05_EAFM+Risk+Assessment.pdf
+  img1: !expr here::here("05_images/noaa_logo.png")
+  img2: !expr here::here("05_images/noaa_logo.png")
+  img3: !expr here::here("05_images/noaa_logo.png")
+  tbl_file: !expr here::here("06_docs/table_template.csv")
+  tbl_file2: !expr here::here("06_docs/table_template_2.csv")
+  img_dir: !expr here::here("05_images")
+  terminal_year: 2026
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -33,16 +33,11 @@ knitr::opts_chunk$set(echo = FALSE)
  }
 \BgThispage
 
-<!-- trying to overlay a fish image in the upper right -- not working -->
-<!-- \begin{wrapfigure}{r}{0.2\textwidth} -->
-<!--   \includegraphics[width=.3\linewidth]{noaa_logo.png} -->
-<!-- \end{wrapfigure} -->
 
 \vspace{-2.5cm}
 
-\section{Spring `r params$terminal_year`}
+\section{Fall `r params$terminal_year`}
 
-Black sea bass is an important Mid-Atlantic stock with high commercial value and recreational engagement. There are two stock subunits, divided at the Hudson Canyon. Overfishing is not occurring and the stock is not overfished. The stock assessment model uses winter bottom temperature as a recruitment covariate to incorporate the observed link between cold temperature and smaller year classes.
 
 :::: {layout="[ [0.4, 0.025, 0.575], [1], [0.575, 0.025, 0.4]] "}
 
@@ -128,21 +123,37 @@ According to the [Mid-Atlantic `r params$terminal_year` EAFM risk assessment upd
 \newgeometry{top=0.25in, left=0.25in, right=0.25in, bottom=0.25in}
 
 ```{r}
-# data <- readxl::read_excel(params$tbl_file) |>
-#   janitor::clean_names() |>
-#   dplyr::mutate(figure =  paste0(params$img_dir, "/", time_series)) |>
-#   dplyr::rename_with(.fn = ~paste(.x, "in", params$terminal_year, sep = "_"),
-#                 .cols = "status") |>
-#   dplyr::select(-time_series)
-
-data <- NEesp2::format_tbl_data(file = params$tbl_file,
+data1 <- NEesp2::format_tbl_data(file = params$tbl_file,
                             term_year = params$terminal_year,
                             dir = params$img_dir)
 ```
 
 ::: {}
 ```{r}
-NEesp2::rpt_card_table(data,
+NEesp2::rpt_card_table(data1,
+                       widths = params$widths)
+```
+:::
+
+\newpage
+
+\backgroundsetup{
+  contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg2.jpg}}
+  }
+\BgThispage
+<!-- not sure why this doesn't work -->
+
+\newgeometry{top=0.25in, left=0.25in, right=0.25in, bottom=0.25in}
+
+```{r}
+data2 <- NEesp2::format_tbl_data(file = params$tbl_file2,
+                            term_year = params$terminal_year,
+                            dir = params$img_dir)
+```
+
+::: {}
+```{r}
+NEesp2::rpt_card_table(data2,
                        widths = params$widths)
 ```
 

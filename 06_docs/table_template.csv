@@ -1,7 +1,6 @@
 ﻿Indicator (units),Status,Implications,Time Series,w,h
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),test.png,3,0.75
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),noaa_logo.png,2.33,1
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),noaa_logo.png,2.33,1
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),noaa_logo.png,2.33,1
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),noaa_logo.png,2.33,1
-Add indicator and units here,Add status in terminal year here (short phrase),Add implications here (3-5 sentences),noaa_logo.png,2.33,1
+Average price (2025 USD/lb),Below the long term mean,Add implications here (3-5 sentences),indicator_table/avg_price.png,2.33,1
+Commerical landings (millions of lbs),Near the long term mean,Add implications here (3-5 sentences),indicator_table/landings.png,2.33,1
+Number of commercial vessels (# of federally-permitted vessels landing over 1lb of American plaice),Below the long term mean,Add implications here (3-5 sentences),indicator_table/n_vessels.png,2.33,1
+"Commercial revenue (millions, inflation adjusted to 2025 USD)",Near the long term mean,Add implications here (3-5 sentences),indicator_table/revenue.png,2.33,1
+Commercial revenue per active American plaice vessel (2025 USD),Above the long term mean,Add implications here (3-5 sentences),indicator_table/rev_vessel.png,2.33,1
