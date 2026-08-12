@@ -14,8 +14,8 @@ format:
     papersize: letter
 params:
   widths: !expr c(0.9, 0.75, 3, 3)
-  img1: !expr here::here("05_images/noaa_logo.png")
-  img2: !expr here::here("05_images/noaa_logo.png")
+  img1: !expr here::here("05_images/plaice_map.png")
+  img2: !expr here::here("05_images/condition.png")
   img3: !expr here::here("05_images/noaa_logo.png")
   tbl_file: !expr here::here("06_docs/table_template.csv")
   tbl_file2: !expr here::here("06_docs/table_template_2.csv")
@@ -55,50 +55,28 @@ knitr::opts_chunk$set(echo = FALSE)
 \section{`r params$terminal_year` in Review}
 
 \subsection{Fishing Community Observations}
-- Steady or increasing availability 
-- Expanding distributions and changes in migration timing
-- Local regulatory complexity affects fishing opportunities
+- Text here
+
 
 \subsection{Commercial Fishery}
-- Number of active vessels declined in 2024, but total landings increased from 2023 
-- Total revenue decreased slightly along with average prices ($/lb)
-- Average revenue per vessel increased, following an upward trend over the past three years for vessels that remain in the fishery
+- Text here
 
-\subsection{Recreational Fishery}
-- Number of targeted trips, catch, and landings all down from 2023
-- But number of trips still above the historic average 
-- Not clear if catch per angler has continued to increase in 2024
 
 \subsection{Ecosystem}
-- Cold winter in the north but near average in the south
-- Poor or below average fish condition in recent years
+- Text here
+
 :::
 
 ::: {}
 \vspace{0.5cm}
-\section{Key Points from the Mid-Atlantic Risk Assessment}
+\section{Species Condition/Distribution Maps?/Some other title here}
 :::
 
 ::: {}
-\vspace{-3cm}
+\vspace{0.5cm}
 
 \raggedright
-<!-- maybe this is being centered because it's the only section without a header? -->
-According to the [Mid-Atlantic `r params$terminal_year` EAFM risk assessment update](`r params$risk_url`), Black Sea Bass scored high and/or moderately high risk in the following elements:
-
-- Moderate-high to high risk to the stock due to:
-  - Very high exposure to changes in climate 
-  - Observed and potential changes in distribution; northward shift into the Gulf of Maine
-  - Dependence on threatened estuarine habitat
-  - Decline in the biomass of benthic invertebrate prey 
-  - Decline in black sea bass body condition in the Mid Atlantic Bight
-- High risk to the recreational fishery due to:
-  - Catch exceeding harvest limits in several years
-  - High regulatory complexity; frequent changes and varying interstate regulations; regulatory changes in allocations
-- Moderate-high risk to the commercial fishery due to:
-  - Commercial revenue in wind development areas 
-  - High discards & discard mortality
-
+Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having neutral to good condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 :::
 
 ::: {}
@@ -107,7 +85,6 @@ According to the [Mid-Atlantic `r params$terminal_year` EAFM risk assessment upd
 
 ::: {}
 ![](`r params$img2`)
-![](`r params$img3`)
 :::
 
 ::::
