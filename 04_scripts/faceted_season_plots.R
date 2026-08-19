@@ -38,8 +38,8 @@ spring_bt <- bt_data |>
 bt_combined <- dplyr::bind_rows(fall_bt, spring_bt) |>
   dplyr::mutate(
     Season = dplyr::case_when(
-      INDICATOR_NAME == "fall_bt" ~ "Fall",
-      INDICATOR_NAME == "spring_bt" ~ "Spring"
+      INDICATOR_NAME == "fall_bt" ~ "Oct - Sept",
+      INDICATOR_NAME == "spring_bt" ~ "Mar - Feb"
     )
   )
 

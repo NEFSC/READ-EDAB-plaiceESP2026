@@ -4,7 +4,7 @@ format:
   pdf:
     margin-left: "0.5in"
     margin-right: "0.5in"
-    margin-top: "0in"
+    margin-top: "0.5in"
     margin-bottom: "0.5in"
     fontsize: "10pt"
     linestretch: 1
@@ -21,6 +21,8 @@ params:
   tbl_file2: !expr here::here("06_docs/table_template_2.csv")
   img_dir: !expr here::here("05_images")
   terminal_year: 2026
+latex_engine: xelatex
+bibliography: references.bib
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -39,7 +41,7 @@ knitr::opts_chunk$set(echo = FALSE)
 \section{Fall `r params$terminal_year`}
 
 
-:::: {layout="[ [0.4, 0.025, 0.575], [1], [0.575, 0.025, 0.4]] "}
+:::: {layout="[ [0.45, 0.025, 0.475], [1], [0.575, 0.025, 0.4]] "}
 
 ::: {}
 <!-- \begin{frame} -->
@@ -52,30 +54,25 @@ knitr::opts_chunk$set(echo = FALSE)
 :::
 
 ::: {}
-\section{`r params$terminal_year` in Review}
 
-\subsection{Fishing Community Observations}
-- Text here
-
-
-\subsection{Commercial Fishery}
-- Text here
-
-
-\subsection{Ecosystem}
-- Text here
+This snapshot ESP is provides an update to ecosystem indicators identified in Term of Reference 1 of the 2022 American Plaice Research Track Assessment [@behan2022indicators] [@behan2022esp]. [@behan2022indicators] identified a suite of ecosystem indicators that are relevant to American plaice. Recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). Bottom temperature anomalies (also affected by the Gulf Stream Index) and spawning stock biomass (SSB) were both significant factors influencing plaice shift to deeper and more northward distribution. The AMO was also prevalent variable in American plaice condition. The goal of this report is to provide recent context for how these indicators may impact the American plaice stock, as well as highlighting recent socioeconomic information, using time series with the most recent years of data since the 2022 Research Track Assessment. 
 
 :::
 
 ::: {}
-\vspace{0.5cm}
-\section{Species Condition/Distribution Maps?/Some other title here}
+\vspace{1.0cm}
 :::
 
 ::: {}
 \vspace{0.5cm}
 
-\raggedright
+\vspace{0.25cm}
+In the 2016 Climate Vulnerability Assessment, American plaice had an overall low vulnerability rank but high climate exposure from increasing surface temperatures and ocean acidification [@Hare2016]. There is evidence of American plaice shifting distribution into deeper waters [@Nye2009] and increasing latitude in the Gulf of Maine [@Behan2026], and further warming may decrease available habitat. 
+
+\vspace{0.25cm}
+The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 [@NEFMC2003Amendment13] after significant declines in landings and revenue. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 [@NEFMC2026Amendment25] along with spawning stock biomass [@NEFSC2024AmericanPlaice]. 
+
+\vspace{0.25cm}
 Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having neutral to good condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 :::
 
@@ -100,14 +97,14 @@ Condition of American plaice across the Northeast Shelf exhibited lows in the 20
 \newgeometry{top=0.25in, left=0.25in, right=0.25in, bottom=0.25in}
 
 ```{r}
-data1 <- NEesp2::format_tbl_data(file = params$tbl_file,
+data2 <- NEesp2::format_tbl_data(file = params$tbl_file2,
                             term_year = params$terminal_year,
                             dir = params$img_dir)
 ```
 
 ::: {}
 ```{r}
-NEesp2::rpt_card_table(data1,
+NEesp2::rpt_card_table(data2,
                        widths = params$widths)
 ```
 :::
@@ -123,17 +120,32 @@ NEesp2::rpt_card_table(data1,
 \newgeometry{top=0.25in, left=0.25in, right=0.25in, bottom=0.25in}
 
 ```{r}
-data2 <- NEesp2::format_tbl_data(file = params$tbl_file2,
+data1 <- NEesp2::format_tbl_data(file = params$tbl_file,
                             term_year = params$terminal_year,
                             dir = params$img_dir)
 ```
 
 ::: {}
 ```{r}
-NEesp2::rpt_card_table(data2,
+NEesp2::rpt_card_table(data1,
                        widths = params$widths)
 ```
+\vspace{-0.4cm}
+\footnotesize \* The y-axis units are included in the "Indicator" column of the table. In all figures, the dashed line represents the time series mean, and the solid green lines indicate ± 1 standard deviation. Commercial data were derived from the commercial dealer database hosted at the Greater Atlantic Regional Office. All dollar values have been adjusted to 2026 real dollars using the [Gross Domestic Implicit Price Deflator](https://fred.stlouisfed.org/series/GDPDEF). \newline
 
-\centering
-Please contact [nefsc.esp.leads@noaa.gov](nefsc.esp.leads@noaa.gov) with any questions or comments.
+\vspace{1.5cm}
+\centering\normalsize
+
+We welcome your observations! Please contact [northeast.ecosystem.highlights@noaa.gov](northeast.ecosystem.highlights@noaa.gov) with any on-the-water insights or changes observed in the American plaice fishery and [nefsc.esp.leads@noaa.gov](nefsc.esp.leads@noaa.gov) with questions or comments on the information presented in this report.\newline
+
+The code used to create this report can be viewed online: [github.com/NEFSC/READ-EDAB-plaiceESP2026](github.com/NEFSC/READ-EDAB/plaiceESP2026) 
+:::
+
+
+\newpage
+\pagenumbering{gobble}
+\newgeometry{top=1in, left=1in, right=1in, bottom=1in}
+
+# References
+::: {#refs}
 :::

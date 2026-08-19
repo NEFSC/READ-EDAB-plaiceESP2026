@@ -235,7 +235,7 @@ NEesp2::plt_indicator(data = fall_bt,
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
-  )
+  ) 
 ```
 
 #### ANNUAL MEAN PRIOR TO SPRING SURVEY = MAR(year-1) - FEB
@@ -445,7 +445,8 @@ NEesp2::plot_condition(data = data,
                        var = "American plaice", 
                        return = TRUE) +
   # ggplot2::facet_wrap(~EPU, ncol = 1) +
-  ggplot2::theme(legend.position = "bottom")
+  ggplot2::theme(legend.position = "bottom") +
+  ggplot2::ylab("Relative Condition")
 ```
 
 ## Key Takeaways
