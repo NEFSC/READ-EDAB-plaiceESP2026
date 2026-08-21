@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
 ```{r}
 #| out-width: "50%"
 #| fig-align: center
+#| out.extra: 'style="border: 2px solid black;"'
 knitr::include_graphics("../05_images/plaice_map.png")
 ```
 
@@ -446,7 +447,10 @@ NEesp2::plot_condition(data = data,
                        return = TRUE) +
   # ggplot2::facet_wrap(~EPU, ncol = 1) +
   ggplot2::theme(legend.position = "bottom") +
-  ggplot2::ylab("Relative Condition")
+  ggplot2::ylab("Relative Condition") +
+   ggplot2::theme(
+    panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1)
+  )
 ```
 
 ## Key Takeaways
