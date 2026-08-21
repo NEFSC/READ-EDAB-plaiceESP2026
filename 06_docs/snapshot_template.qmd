@@ -55,7 +55,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ::: {}
 
-This snapshot ESP is provides an update to ecosystem indicators identified in Term of Reference 1 of the 2022 American Plaice Research Track Assessment [@behan2022indicators] [@behan2022esp]. [@behan2022indicators] identified a suite of ecosystem indicators that are relevant to American plaice. Recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). Bottom temperature anomalies (also affected by the Gulf Stream Index) and spawning stock biomass (SSB) were both significant factors influencing plaice shift to deeper and more northward distribution. The AMO was also prevalent variable in American plaice condition. The goal of this report is to provide recent context for how these indicators may impact the American plaice stock, as well as highlighting recent socioeconomic information, using time series with the most recent years of data since the 2022 Research Track Assessment. 
+This snapshot ESP is provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment [@behan2022indicators, @behan2022esp]. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
 
 :::
 
@@ -67,7 +67,7 @@ This snapshot ESP is provides an update to ecosystem indicators identified in Te
 \vspace{0.5cm}
 
 \vspace{0.25cm}
-In the 2016 Climate Vulnerability Assessment, American plaice had an overall low vulnerability rank but high climate exposure from increasing surface temperatures and ocean acidification [@Hare2016]. There is evidence of American plaice shifting distribution into deeper waters [@Nye2009] and increasing latitude in the Gulf of Maine [@Behan2026], and further warming may decrease available habitat. 
+In the 2016 Climate Vulnerability Assessment, American plaice had an overall low vulnerability rank but high climate exposure from increasing surface temperatures and ocean acidification [@Hare2016]. There is evidence of American plaice shifting distribution into deeper waters [@Nye2009], and further warming may decrease available habitat. 
 
 \vspace{0.25cm}
 The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 [@NEFMC2003Amendment13] after significant declines in landings and revenue. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 [@NEFMC2026Amendment25] along with spawning stock biomass [@NEFSC2024AmericanPlaice]. 
