@@ -55,7 +55,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ::: {}
 
-This snapshot ESP is provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment [@behan2022indicators, @behan2022esp]. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
+This snapshot ESP is provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment [@AmericanPlaiceWG2022, @behan2022indicators, @behan2022esp]. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
 
 :::
 
