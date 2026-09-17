@@ -320,6 +320,7 @@ NEesp2::plot_condition(data = data, var = "American plaice", return = TRUE) +
   # ggplot2::facet_wrap(~EPU, ncol = 1) +
   ggplot2::theme(legend.position = "bottom") +
   ggplot2::ylab("Relative Condition") +
+  ggplot2::guides(shape = "none") +
   ggplot2::theme(
     panel.border = ggplot2::element_rect(
       color = "black",
