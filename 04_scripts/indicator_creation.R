@@ -133,8 +133,9 @@ NEesp2::plt_indicator(data = avgprice, ar = 1 / 4, include_trends = TRUE) +
   )
 
 ## Total commercial landings (lbs) ----
-landings <- com_data |>
-  dplyr::filter(INDICATOR_NAME == "Commercial_AMERICANPLAICE_Landings_LBS")
+landings <- read.csv(here::here('01_inputs/catch_data.csv')) |>
+  dplyr::rename(YEAR = Year, DATA_VALUE = Commercial.Landings) |>
+  dplyr::mutate(INDICATOR_NAME = "TOTALANNUALLANDINGS_AMERICANPLAICE_lbs")
 
 NEesp2::plt_indicator(data = landings, ar = 1 / 4, include_trends = FALSE) +
   ggplot2::geom_smooth(
