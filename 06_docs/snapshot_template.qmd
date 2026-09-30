@@ -1,5 +1,5 @@
 ---
-title: "American Plaice (\\protect\\textit{Hippoglossoides platessoides}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile"
+title: "American Plaice (\\protect\\textit{Hippoglossoides platessoides}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile \\linebreak DRAFT"
 format: 
   pdf:
     margin-left: "0.75in"
@@ -23,6 +23,7 @@ params:
   terminal_year: 2026
 latex_engine: xelatex
 bibliography: references.bib
+csl: plos.csl
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -55,7 +56,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ::: {}
 
-This snapshot ESP provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment [@AmericanPlaiceWG2022, @behan2022indicators, @behan2022esp]. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
+### Background
+
+This snapshot ESP provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment @AmericanPlaiceWG2022, @behan2022indicators, @behan2022esp. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
+
+### Fishery History
+
+The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 @NEFMC2003Amendment13 after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment @nefsc2019americanplaice. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 @NEFMC2026Amendment25 along with spawning stock biomass @NEFSC2024AmericanPlaice. 
 
 :::
 
@@ -65,11 +72,13 @@ This snapshot ESP provides an update to ecosystem indicators identified in the 2
 
 ::: {}
 
-In the 2016 Climate Vulnerability Assessment, American plaice had an overall low vulnerability rank but high climate exposure from increasing surface temperatures and ocean acidification [@Hare2016]. There is evidence of American plaice shifting distribution into deeper waters [@Nye2009], and further warming may decrease available habitat. 
-The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 [@NEFMC2003Amendment13] after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment [@nefsc2019americanplaice]. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 [@NEFMC2026Amendment25] along with spawning stock biomass [@NEFSC2024AmericanPlaice]. 
+### Climate Vulnerability Assessment
 
-\vspace{0.25cm}
-An index of relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, and a greater reproductive output and chance of survival [@LeCren1951]. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having neutral to good condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
+In the 2016 Climate Vulnerability Assessment @Hare2016, American plaice had an overall low vulnerability rank but high climate exposure from increasing surface temperatures and ocean acidification. There is evidence of American plaice shifting distribution into deeper waters @Nye2009, and further warming may decrease available habitat. 
+
+### Fish Condition
+
+Relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, greater reproductive output, and higher chance of survival @LeCren1951. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having average to above average condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
 :::
 
 ::: {}
