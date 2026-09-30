@@ -26,6 +26,11 @@ com_data <- NEesp2::get_commercial_data(
   nespp3_codes = "('124')"
 )
 
+# read in to avoid oracle connection
+com_data <- read.csv(here::here(
+  "01_inputs\\AMERICANPLAICE_Commercial_Indicators_Master.csv"
+))
+
 ## Bottom temperature from Hubert (1959-2021) and GLORYS (2021-)
 bt_hubert <- here::here("01_inputs/AMERICANPLAICE_hubert_bottomT.csv")
 bt_glorys <- here::here("01_inputs/AMERICANPLAICE_glorys_bottomT.csv")
@@ -103,7 +108,7 @@ spring_amo <- read.csv(here::here('01_inputs/unsmoothed_amo.csv')) |>
 #   getLengths = TRUE
 # )
 
-condition <- NEesp2::species_condition <- function(
+condition <- NEesp2::species_condition(
   data = data$survdat,
   LWparams = NEesp2::LWparams,
   species.codes = NEesp2::species.codes,
@@ -113,16 +118,17 @@ condition <- NEesp2::species_condition <- function(
   more_than_20_years = TRUE,
   record_outliers = FALSE,
   output = "soe"
-) {
-  # Condition pull stored in '03_outputs/plaice_condition.csv'
-  ###################################################
+)
 
-  # Analyses ----
+# Condition pull stored in '03_outputs/plaice_condition.csv'
+###################################################
 
-  ## Average price per pound ----
-  avgprice <- com_data |>
-    dplyr::filter(INDICATOR_NAME == "AVGPRICE_AMERICANPLAICE_2025_DOLlb")
-}
+# Analyses ----
+
+## Average price per pound ----
+avgprice <- com_data |>
+  dplyr::filter(INDICATOR_NAME == "AVGPRICE_AMERICANPLAICE_2025_DOLlb")
+
 
 NEesp2::plt_indicator(data = avgprice, ar = 1 / 4, include_trends = TRUE) +
   ggplot2::scale_x_continuous(
@@ -131,6 +137,14 @@ NEesp2::plt_indicator(data = avgprice, ar = 1 / 4, include_trends = TRUE) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
+
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/avg_price.png"),
+  width = 4.5,
+  height = 1.7,
+  units = "in",
+  dpi = 300
+)
 
 ## Total commercial landings (lbs) ----
 landings <- read.csv(here::here('01_inputs/catch_data.csv')) |>
@@ -142,7 +156,8 @@ NEesp2::plt_indicator(data = landings, ar = 1 / 4, include_trends = FALSE) +
     method = "lm",
     se = FALSE,
     color = "purple",
-    linetype = "solid"
+    linetype = "solid",
+    aes = 0.5
   ) +
   ggplot2::geom_line() +
   ggplot2::geom_point() +
@@ -153,6 +168,14 @@ NEesp2::plt_indicator(data = landings, ar = 1 / 4, include_trends = FALSE) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
+
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/landings_catch_data.png"),
+  width = 4.5,
+  height = 1.7,
+  units = "in",
+  dpi = 120
+)
 
 ## Total commercial revenue ($USD/2025) ----
 totalrev <- com_data |>
@@ -174,6 +197,14 @@ NEesp2::plt_indicator(data = totalrev, ar = 1 / 4, include_trends = FALSE) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
+
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/revenue.png"),
+  width = 4.5,
+  height = 1.7,
+  units = "in",
+  dpi = 300
+)
 
 ## N vessels ----
 nvessels <- com_data |>
@@ -319,13 +350,25 @@ data <- read.csv(here::here("03_outputs/plaice_condition.csv")) |>
 
 NEesp2::plot_condition(data = data, var = "American plaice", return = TRUE) +
   # ggplot2::facet_wrap(~EPU, ncol = 1) +
+  # ggplot2::scale_color_discrete(labels = c("Very low", "Low", "Average", "High", "Very high")) +
   ggplot2::theme(legend.position = "bottom") +
-  ggplot2::ylab("Relative Condition") +
-  ggplot2::guides(shape = "none") +
+  ggplot2::ylab("Relative\nCondition") +
+  ggplot2::guides(
+    shape = "none",
+    color = ggplot2::guide_legend(ncol = 3, title = ggplot2::element_blank())
+  ) +
   ggplot2::theme(
-    panel.border = ggplot2::element_rect(
+    plot.background = ggplot2::element_rect(
+      fill = "white",
       color = "black",
-      fill = NA,
-      linewidth = 1
+      linewidth = 2
     )
   )
+
+ggplot2::ggsave(
+  here::here("05_images/condition.png"),
+  width = 4.5,
+  height = 3,
+  dpi = 300,
+  bg = "transparent"
+)

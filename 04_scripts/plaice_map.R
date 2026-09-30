@@ -92,16 +92,24 @@ plt <- ggplot2::ggplot() +
   ggplot2::theme_minimal() +
   ggplot2::labs(x = NULL, y = NULL) +
   ggplot2::ylim(c(40, 44.5)) +
-  ggplot2::xlim(c(-71, -65.5))
+  ggplot2::xlim(c(-71, -65.5)) +
+  ggplot2::theme(
+    plot.background = ggplot2::element_rect(
+      fill = "white",
+      color = "black",
+      linewidth = 2
+    )
+  )
 plt
 
 ## save
 png(
-  here::here("03_outputs", "plaice_map.png"),
+  here::here("05_images", "plaice_map.png"),
   width = 6,
   height = 6,
   units = "in",
-  res = 300
+  res = 300,
+  bg = "transparent"
 )
 plt
 dev.off()

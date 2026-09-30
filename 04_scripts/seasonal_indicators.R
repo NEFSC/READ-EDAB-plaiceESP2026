@@ -154,6 +154,8 @@ NEesp2::plt_indicator(data = seasonal_sst, ar = 1 / 4, include_trends = TRUE)
 nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::mutate(yearly_nao = rowMeans(dplyr::across(Jan:Dec), na.rm = TRUE)) |>
   dplyr::filter(Year >= 1970) |>
+  # remove 2026 -- incomplete year
+  dplyr::filter(Year < 2026) |>
   dplyr::rename(YEAR = Year) |>
   dplyr::mutate(INDICATOR_NAME = "yearly_nao") |>
   dplyr::select(YEAR, yearly_nao, INDICATOR_NAME) |>
@@ -161,4 +163,12 @@ nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::mutate(NAO_lag2 = dplyr::lag(yearly_nao, n = 2)) |>
   dplyr::rename(DATA_VALUE = NAO_lag2)
 
-NEesp2::plt_indicator(data = nao, ar = 1 / 4, include_trends = TRUE)
+NEesp2::plt_indicator(data = nao, ar = 1 / 4, include_trends = TRUE) +
+  ggplot2::theme(bg = "transparent")
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/nao.png"),
+  width = 4.5,
+  height = 1.7,
+  units = "in",
+  dpi = 120
+)
