@@ -147,7 +147,18 @@ seasonal_sst <- read.csv(here::here('01_inputs/AMERICANPLAICE_sst.csv')) |>
   dplyr::summarize(DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE)) |>
   dplyr::mutate(INDICATOR_NAME = "seasonal_sst")
 
-NEesp2::plt_indicator(data = seasonal_sst, ar = 1 / 4, include_trends = TRUE)
+NEesp2::plt_indicator(data = seasonal_sst, ar = 1 / 4, include_trends = TRUE) +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2026)
+  ) +
+  ggplot2::theme(bg = "transparent")
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/sst.png"),
+  width = 4.66,
+  height = 2,
+  units = "in",
+  dpi = 300
+)
 
 ### NAO ----
 # 2 YEAR LAG (ANNUAL JAN-DEC)
@@ -164,11 +175,17 @@ nao <- read.csv(here::here('01_inputs/nao_index.csv')) |>
   dplyr::rename(DATA_VALUE = NAO_lag2)
 
 NEesp2::plt_indicator(data = nao, ar = 1 / 4, include_trends = TRUE) +
+  ggplot2::scale_x_continuous(
+    breaks = c(seq(1970, 2020, by = 10), 2025)
+  ) +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
+  ) +
   ggplot2::theme(bg = "transparent")
 ggplot2::ggsave(
   here::here("05_images/indicator_table/nao.png"),
-  width = 4.5,
-  height = 1.7,
+  width = 4.66,
+  height = 2,
   units = "in",
-  dpi = 120
+  dpi = 300
 )

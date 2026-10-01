@@ -28,13 +28,13 @@ csl: plos.csl
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ``` 
-\backgroundsetup{
-  scale=1,
-  angle=0,
-  opacity=0,
-  contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg1.jpg}}
- }
-\BgThispage
+<!-- \backgroundsetup{ -->
+<!--   scale=1, -->
+<!--   angle=0, -->
+<!--   opacity=0, -->
+<!--   contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg1.jpg}} -->
+<!--  } -->
+<!-- \BgThispage -->
 
 
 \vspace{-2.5cm}
@@ -78,7 +78,7 @@ In the 2016 Climate Vulnerability Assessment @Hare2016, American plaice had an o
 
 ### Fish Condition
 
-Relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, greater reproductive output, and higher chance of survival @LeCren1951. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having average to above average condition, and are experiencing fewer years of poor or below-average condition compared to lows in the 2000s. 
+Relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, greater reproductive output, and higher chance of survival @LeCren1951. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having average, high, or very high condition, and are experiencing fewer years of low and very-low condition compared to series lows in the 2000s. 
 :::
 
 ::: {}

@@ -49,8 +49,17 @@ NEesp2::plt_indicator(data = bt_combined, ar = 1 / 4, include_trends = TRUE) +
     breaks = c(seq(1970, 2020, by = 10), 2025)
   ) +
   ggplot2::theme(
-    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
-  )
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 12),
+    axis.text.y = ggplot2::element_text(size = 12)
+  ) +
+  ggplot2::theme(bg = "transparent")
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/bt_annual_all.png"),
+  width = 6,
+  height = 4,
+  units = "in",
+  dpi = 300
+)
 
 ### Latitude (fall and spring)
 dismap_fall <- read.csv(here::here('01_inputs/plaice_dismap_fall.csv')) |>
@@ -109,5 +118,14 @@ NEesp2::plt_indicator(data = amo_combined, ar = 1 / 4, include_trends = TRUE) +
     breaks = c(seq(1970, 2020, by = 10), 2022)
   ) +
   ggplot2::theme(
-    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 10)
-  )
+    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 12),
+    axis.text.y = ggplot2::element_text(size = 12)
+  ) +
+  ggplot2::theme(bg = "transparent")
+ggplot2::ggsave(
+  here::here("05_images/indicator_table/amo_all.png"),
+  width = 6,
+  height = 4,
+  units = "in",
+  dpi = 300
+)
