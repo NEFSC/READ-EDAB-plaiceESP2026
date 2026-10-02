@@ -67,9 +67,11 @@ ggplot2::ggsave(
 
 ```{r}
 landings <- read.csv(here::here('01_inputs/catch_data.csv')) |>
+  dplyr::mutate(INDICATOR_NAME = "Commercial Landings (lbs)",
+                Commercial_Landings_1000s = Commercial.Landings / 1000) |>
   dplyr::rename(YEAR = Year,
-                DATA_VALUE = Commercial.Landings) |>
-  dplyr::mutate(INDICATOR_NAME = "Commercial Landings (lbs)")
+                DATA_VALUE = Commercial_Landings_1000s) 
+
 
 
 NEesp2::plt_indicator(data = landings,
@@ -80,7 +82,7 @@ NEesp2::plt_indicator(data = landings,
   ggplot2::geom_point()  +
   ggplot2::scale_x_continuous(
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
-  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
+#  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   ) +
@@ -98,7 +100,10 @@ ggplot2::ggsave(
 
 ```{r}
 totalrev <- data |>
-  dplyr::filter(INDICATOR_NAME == "TOTALANNUALREV_AMERICANPLAICE_2025Dols") 
+  dplyr::filter(INDICATOR_NAME == "TOTALANNUALREV_AMERICANPLAICE_2025Dols") |>
+  dplyr::rename(Revenue_millions = DATA_VALUE) |>
+  dplyr::mutate(Revenue_1000s = Revenue_millions / 1000) |>
+  dplyr::rename(DATA_VALUE = Revenue_1000s)
 
 NEesp2::plt_indicator(data = totalrev,
                       ar = 1/4,
@@ -108,7 +113,7 @@ NEesp2::plt_indicator(data = totalrev,
   ggplot2::geom_point()  +
   ggplot2::scale_x_continuous(
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
-  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
+#  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   ) +
@@ -153,14 +158,17 @@ ggplot2::ggsave(
 
 ```{r}
 vesselrev <- data |>
-  dplyr::filter(INDICATOR_NAME == "AVGVESREVperYr_AMERICANPLAICE_2025_DOLlb") 
+  dplyr::filter(INDICATOR_NAME == "AVGVESREVperYr_AMERICANPLAICE_2025_DOLlb") |>
+  dplyr::rename(Revenue_millions = DATA_VALUE) |>
+  dplyr::mutate(Revenue_1000s = Revenue_millions / 1000) |>
+  dplyr::rename(DATA_VALUE = Revenue_1000s)
 
 NEesp2::plt_indicator(data = vesselrev,
                       ar = 1/4,
                       include_trends = TRUE)  +
   ggplot2::scale_x_continuous(
     breaks = c(seq(1970, 2020, by = 10), 2025)) +
-  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
+#  ggplot2::scale_y_continuous(labels = scales::label_scientific()) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   ) +
