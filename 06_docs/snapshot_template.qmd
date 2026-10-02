@@ -62,7 +62,7 @@ This snapshot ESP provides an update to ecosystem indicators identified in the 2
 
 ### Fishery History
 
-The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 @NEFMC2003Amendment13 after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment @nefsc2019americanplaice. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 @NEFMC2026Amendment25 along with spawning stock biomass @NEFSC2024AmericanPlaice. 
+The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 @NEFMC2003Amendment13 after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment @nefsc2019americanplaice. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 @NEFMC2026Amendment25 while spawning stock biomass has fluctuated @NEFSC2024AmericanPlaice. 
 
 :::
 
