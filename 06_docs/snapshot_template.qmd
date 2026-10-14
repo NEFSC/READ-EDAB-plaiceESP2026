@@ -6,7 +6,7 @@ format:
     margin-right: "0.75in"
     margin-top: "0.5in"
     margin-bottom: "0.5in"
-    fontsize: "10pt"
+    fontsize: "9pt"
     linestretch: 1
     indent: true
     include-in-header: template.tex    
@@ -28,49 +28,35 @@ csl: plos.csl
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ``` 
-<!-- \backgroundsetup{ -->
-<!--   scale=1, -->
-<!--   angle=0, -->
-<!--   opacity=0, -->
-<!--   contents={\includegraphics[width=\paperwidth,height=\paperheight]{bg_pg1.jpg}} -->
-<!--  } -->
-<!-- \BgThispage -->
 
+\thispagestyle{empty}
 
-\vspace{-2.5cm}
+\vspace{-2.25cm}
 
 \section{Fall `r params$terminal_year`}
 
-
-:::: {layout="[ [0.45, 0.025, 0.475], [1], [0.575, 0.025, 0.4]] "}
+:::: {layout="[0.36, -0.02, 0.62]"}
 
 ::: {}
-<!-- \begin{frame} -->
 ![](`r params$img1`)
-<!-- \end{frame} -->
 :::
 
 ::: {}
-\hfill
-:::
-
-::: {}
-
 ### Background
 
-This snapshot ESP provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment @AmericanPlaiceWG2022, @behan2022indicators, @behan2022esp. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information.
+This snapshot ESP provides an update to ecosystem indicators identified in the 2022 American Plaice Research Track Assessment @AmericanPlaiceWG2022, @behan2022indicators, @behan2022esp. This previous work found that the recruitment of plaice is related to sea surface temperature, the Atlantic Multidecadal Oscillation (AMO), and the North Atlantic Oscillation (NAO). AMO was also correlated with plaice condition. Bottom temperature anomalies, the Gulf Stream Index, and spawning stock biomass (SSB) were associated with plaice distribution. The goal of this report is to update the indicator datasets and provide context around what recent indicator data may mean for the American plaice stock, as well as highlighting recent socioeconomic information. Socioeconomic indicator time series begin in 1996 - the time series was selected to balance concerns over early data quality against the need for a long enough time horizon to reliably identify trends.
+:::
 
+::::
+
+\vspace{-0.3cm}
+
+:::: {layout="[0.56, -0.02, 0.42]"}
+
+::: {}
 ### Fishery History
 
-The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 @NEFMC2003Amendment13 after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment @nefsc2019americanplaice. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 @NEFMC2026Amendment25 while spawning stock biomass has fluctuated @NEFSC2024AmericanPlaice. 
-
-:::
-
-::: {}
-\vspace{0.5cm}
-:::
-
-::: {}
+The New England Fishery Management Council (NEFMC) put American plaice under a rebuilding plan in 2004 @NEFMC2003Amendment13 after significant declines in landings and revenue. The stock has been considered rebuilt after the 2019 stock assessment @nefsc2019americanplaice. While the number of commercial vessels landing plaice has continued to decline, revenue and landings have rebounded somewhat post-COVID19 @NEFMC2026Amendment25 while spawning stock biomass has fluctuated @NEFSC2024AmericanPlaice.
 
 ### Climate Vulnerability Assessment
 
@@ -82,11 +68,7 @@ Relative condition is the ratio of observed weight to predicted weight based on 
 :::
 
 ::: {}
-\hfill
-:::
-
-::: {}
-![](`r params$img2`)
+![](`r params$img2`){width=100%}
 :::
 
 ::::

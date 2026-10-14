@@ -503,19 +503,27 @@ From ESP: "SSB had the most significant influence on mean condition, followed by
 #| fig-height: 8
 #| fig-align: center
 
-data <- read.csv(here::here("03_outputs/plaice_condition.csv")) |>
-  dplyr::group_by(Species, YEAR, INDICATOR_NAME) |>
+condition_length <- NEesp2::species_condition(data = data$survdat,
+                          LWparams = NEesp2::LWparams,
+                          species.codes = NEesp2::species.codes,
+                          by_EPU = TRUE,
+                          by_sex = FALSE,
+                          length_break = c(0, 20, 35, 50, 500)) |>
+  dplyr::filter(.data$Species == "American plaice") |>
+  dplyr::rename(DATA_VALUE = MeanCond) |>
+  dplyr::group_by(Species, YEAR, INDICATOR_NAME, length_group) |>
   dplyr::summarise(
     DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
     .groups = "drop"
   ) |>
   dplyr::mutate(EPU = "ALL")
 
+
 plot_condition <- function(data, var, return = TRUE) {
   condition <- data |>
-    dplyr::select(.data$YEAR, .data$Species, .data$EPU, .data$DATA_VALUE) |>
-    dplyr::group_by(.data$Species) |>
-    dplyr::mutate(scaleCond = scale(.data$DATA_VALUE, scale = T, center = T))
+    dplyr::select(.data$YEAR, .data$Species, .data$EPU, .data$DATA_VALUE, .data$length_group) |>
+    dplyr::group_by(.data$Species, .data$length_group) |>
+    dplyr::mutate(scaleCond = scale(.data$DATA_VALUE, scale = TRUE, center = TRUE))
 
   xs <- stats::quantile(
     condition$scaleCond,
@@ -537,7 +545,7 @@ plot_condition <- function(data, var, return = TRUE) {
     dplyr::filter(.data$Species %in% var) |>
     dplyr::ungroup() |>
     dplyr::arrange(.data$YEAR) |>
-    dplyr::group_by(.data$EPU) |>
+    dplyr::group_by(.data$EPU, .data$length_group) |>
     dplyr::mutate(
       mean = mean(.data$DATA_VALUE, na.rm = TRUE),
       sd = stats::sd(.data$DATA_VALUE, na.rm = TRUE)
@@ -551,11 +559,13 @@ plot_condition <- function(data, var, return = TRUE) {
     ggplot2::geom_path(color = "black", lty = 2, alpha = 0.5) +
     ggplot2::geom_point(cex = 3) +
     ggplot2::xlim(c(1989, 2024)) +
+    ggplot2::facet_wrap(~ length_group, ncol = 1) +
+    ggplot2::labs(y = "Relative Condition", x = NULL) +
     ggplot2::theme_classic(base_size = 16) +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 16),
       axis.title.x = ggplot2::element_blank(),
-      aspect.ratio = 0.4,
+      aspect.ratio = 0.6,
       legend.direction = "vertical",
       legend.box = "horizontal"
     ) +
@@ -565,14 +575,15 @@ plot_condition <- function(data, var, return = TRUE) {
 }
 
 
-plot_condition(data = data, var = "American plaice", return = TRUE) +
-  # ggplot2::facet_wrap(~EPU, ncol = 1) +
-  # ggplot2::scale_color_discrete(labels = c("Very low", "Low", "Average", "High", "Very high")) +
-  ggplot2::theme(legend.position = "bottom") +
+plot_condition(data = condition_length, var = "American plaice", return = TRUE) +
+  ggplot2::theme(
+    legend.position = "bottom",
+    plot.margin = ggplot2::margin(t = 10, r = 25, b = 10, l = 10)
+  ) +
   ggplot2::ylab("Relative\nCondition") +
   ggplot2::guides(
     shape = "none",
-    color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank())
+    color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank()) # 2 columns reduces width
   ) +
   ggplot2::theme(
     plot.background = ggplot2::element_rect(
@@ -584,8 +595,8 @@ plot_condition(data = data, var = "American plaice", return = TRUE) +
 
 ggplot2::ggsave(
   here::here("05_images/condition.png"),
-  width = 4.5,
-  height = 3,
+  width = 5,
+  height = 7,
   dpi = 300,
   bg = "transparent"
 )
