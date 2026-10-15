@@ -339,38 +339,20 @@ NEesp2::plt_indicator(data = spring_amo, ar = 1 / 4, include_trends = TRUE) +
     axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
   )
 
-## Species Condition ----
-condition_length <- NEesp2::species_condition(
-  data = data$survdat,
-  LWparams = NEesp2::LWparams,
-  species.codes = NEesp2::species.codes,
-  by_EPU = TRUE,
-  by_sex = FALSE,
-  length_break = c(0, 20, 35, 50, 500)
-) |>
-  dplyr::filter(.data$Species == "American plaice") |>
-  dplyr::rename(DATA_VALUE = MeanCond) |>
-  dplyr::group_by(Species, YEAR, INDICATOR_NAME, length_group) |>
+## Species condition without length bins----
+data <- read.csv(here::here("03_outputs/plaice_condition.csv")) |>
+  dplyr::group_by(Species, YEAR, INDICATOR_NAME) |>
   dplyr::summarise(
     DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
     .groups = "drop"
   ) |>
   dplyr::mutate(EPU = "ALL")
 
-
 plot_condition <- function(data, var, return = TRUE) {
   condition <- data |>
-    dplyr::select(
-      .data$YEAR,
-      .data$Species,
-      .data$EPU,
-      .data$DATA_VALUE,
-      .data$length_group
-    ) |>
-    dplyr::group_by(.data$Species, .data$length_group) |>
-    dplyr::mutate(
-      scaleCond = scale(.data$DATA_VALUE, scale = TRUE, center = TRUE)
-    )
+    dplyr::select(.data$YEAR, .data$Species, .data$EPU, .data$DATA_VALUE) |>
+    dplyr::group_by(.data$Species) |>
+    dplyr::mutate(scaleCond = scale(.data$DATA_VALUE, scale = T, center = T))
 
   xs <- stats::quantile(
     condition$scaleCond,
@@ -392,7 +374,7 @@ plot_condition <- function(data, var, return = TRUE) {
     dplyr::filter(.data$Species %in% var) |>
     dplyr::ungroup() |>
     dplyr::arrange(.data$YEAR) |>
-    dplyr::group_by(.data$EPU, .data$length_group) |>
+    dplyr::group_by(.data$EPU) |>
     dplyr::mutate(
       mean = mean(.data$DATA_VALUE, na.rm = TRUE),
       sd = stats::sd(.data$DATA_VALUE, na.rm = TRUE)
@@ -406,13 +388,11 @@ plot_condition <- function(data, var, return = TRUE) {
     ggplot2::geom_path(color = "black", lty = 2, alpha = 0.5) +
     ggplot2::geom_point(cex = 3) +
     ggplot2::xlim(c(1989, 2024)) +
-    ggplot2::facet_wrap(~length_group, ncol = 1) +
-    ggplot2::labs(y = "Relative Condition", x = NULL) +
     ggplot2::theme_classic(base_size = 16) +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 16),
       axis.title.x = ggplot2::element_blank(),
-      aspect.ratio = 0.6,
+      aspect.ratio = 0.4,
       legend.direction = "vertical",
       legend.box = "horizontal"
     ) +
@@ -422,41 +402,179 @@ plot_condition <- function(data, var, return = TRUE) {
 }
 
 
-plot_condition(
-  data = condition_length,
+condition <- plot_condition(
+  data = data,
   var = "American plaice",
   return = TRUE
 ) +
-  ggplot2::theme(
-    legend.position = "bottom",
-    plot.margin = ggplot2::margin(t = 10, r = 25, b = 10, l = 10)
-  ) +
+  # ggplot2::facet_wrap(~EPU, ncol = 1) +
+  # ggplot2::scale_color_discrete(labels = c("Very low", "Low", "Average", "High", "Very high")) +
+  ggplot2::theme(legend.position = "bottom") +
   ggplot2::ylab("Relative\nCondition") +
   ggplot2::guides(
     shape = "none",
-    color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank()) # 2 columns reduces width
+    color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank())
   ) +
   ggplot2::theme(
     plot.background = ggplot2::element_rect(
-      fill = "white",
-      color = "black",
-      linewidth = 2
+      fill = "white"
+      # color = "black",
+      # linewidth = 2
     )
   )
 
+ggplot2::ggsave(
+  here::here("05_images/condition_nolength.png"),
+  width = 4.5,
+  height = 3,
+  dpi = 300,
+  bg = "transparent"
+)
+
+## Species Condition with length bins----
+# condition_length <- NEesp2::species_condition(
+#   data = data$survdat,
+#   LWparams = NEesp2::LWparams,
+#   species.codes = NEesp2::species.codes,
+#   by_EPU = TRUE,
+#   by_sex = FALSE,
+#   length_break = c(0, 20, 35, 50, 500)
+# ) |>
+#   dplyr::filter(.data$Species == "American plaice") |>
+#   dplyr::rename(DATA_VALUE = MeanCond) |>
+#   dplyr::group_by(Species, YEAR, INDICATOR_NAME, length_group) |>
+#   dplyr::summarise(
+#     DATA_VALUE = mean(DATA_VALUE, na.rm = TRUE),
+#     .groups = "drop"
+#   ) |>
+#   dplyr::mutate(EPU = "ALL")
+#
+#
+# plot_condition <- function(data, var, return = TRUE) {
+#   condition <- data |>
+#     dplyr::select(
+#       .data$YEAR,
+#       .data$Species,
+#       .data$EPU,
+#       .data$DATA_VALUE,
+#       .data$length_group
+#     ) |>
+#     dplyr::group_by(.data$Species, .data$length_group) |>
+#     dplyr::mutate(
+#       scaleCond = scale(.data$DATA_VALUE, scale = TRUE, center = TRUE)
+#     )
+#
+#   xs <- stats::quantile(
+#     condition$scaleCond,
+#     seq(0, 1, length.out = 6),
+#     na.rm = TRUE
+#   )
+#
+#   condition <- condition |>
+#     dplyr::mutate(
+#       category = cut(
+#         .data$scaleCond,
+#         breaks = xs,
+#         labels = c("Very Low", "Low", "Average", "High", "Very High"),
+#         include.lowest = TRUE
+#       )
+#     )
+#
+#   condition <- condition |>
+#     dplyr::filter(.data$Species %in% var) |>
+#     dplyr::ungroup() |>
+#     dplyr::arrange(.data$YEAR) |>
+#     dplyr::group_by(.data$EPU, .data$length_group) |>
+#     dplyr::mutate(
+#       mean = mean(.data$DATA_VALUE, na.rm = TRUE),
+#       sd = stats::sd(.data$DATA_VALUE, na.rm = TRUE)
+#     ) |>
+#     ggplot2::ggplot(ggplot2::aes(
+#       x = .data$YEAR,
+#       y = .data$DATA_VALUE,
+#       color = .data$category,
+#       shape = .data$EPU
+#     )) +
+#     ggplot2::geom_path(color = "black", lty = 2, alpha = 0.5) +
+#     ggplot2::geom_point(cex = 3) +
+#     ggplot2::xlim(c(1989, 2024)) +
+#     ggplot2::facet_wrap(~length_group, ncol = 1) +
+#     ggplot2::labs(y = "Relative Condition", x = NULL) +
+#     ggplot2::theme_classic(base_size = 16) +
+#     ggplot2::theme(
+#       strip.text = ggplot2::element_text(size = 16),
+#       axis.title.x = ggplot2::element_blank(),
+#       aspect.ratio = 0.6,
+#       legend.direction = "vertical",
+#       legend.box = "horizontal"
+#     ) +
+#     viridis::scale_color_viridis(discrete = TRUE)
+#
+#   return(condition)
+# }
+#
+#
+# plot_condition(
+#   data = condition_length,
+#   var = "American plaice",
+#   return = TRUE
+# ) +
+#   ggplot2::theme(
+#     legend.position = "bottom",
+#     plot.margin = ggplot2::margin(t = 10, r = 25, b = 10, l = 10)
+#   ) +
+#   ggplot2::ylab("Relative\nCondition") +
+#   ggplot2::guides(
+#     shape = "none",
+#     color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank()) # 2 columns reduces width
+#   ) +
+#   ggplot2::theme(
+#     plot.background = ggplot2::element_rect(
+#       fill = "white",
+#       color = "black",
+#       linewidth = 2
+#     )
+#   )
+
 ## Maximum length from survey data --
+survdat <- read.csv(here::here('survdat_pull.csv'))
 max_length <- survdat |>
   dplyr::filter(.data$SVSPP == '102') |>
   dplyr::group_by(YEAR) |>
   dplyr::summarise(DATA_VALUE = max(LENGTH, na.rm = TRUE)) |>
   dplyr::mutate(INDICATOR_NAME = 'max_length')
 
-NEesp2::plt_indicator(data = max_length, include_trends = TRUE)
+length <- plt_indicator(data = max_length, include_trends = TRUE) +
+  ggplot2::labs(y = "Max. Length", x = ggplot2::element_blank())
 
 ggplot2::ggsave(
   here::here("05_images/max_length.png"),
   width = 4.66,
   height = 2,
+  units = "in",
+  dpi = 300
+)
+
+## Ggarrange condition and max length
+
+# Add a black border around the entire combined layout
+library(ggplot2)
+library(patchwork)
+
+# 2. Combine using patchwork and explicitly align plot areas
+combined_plot <- (condition / length) +
+  plot_layout(axis_titles = "collect") +
+  plot_annotation(
+    theme = theme(
+      plot.background = element_rect(color = "black", fill = NA, linewidth = 1)
+    )
+  )
+
+combined_plot
+ggplot2::ggsave(
+  here::here("05_images/condition_length.png"),
+  width = 4.66,
+  height = 6,
   units = "in",
   dpi = 300
 )

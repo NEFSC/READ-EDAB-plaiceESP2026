@@ -15,8 +15,7 @@ format:
 params:
   widths: !expr c(0.9, 0.75, 3, 3)
   img1: !expr here::here("05_images/plaice_map.png")
-  img2: !expr here::here("05_images/condition_nolength.png")
-  img3: !expr here::here("05_images/max_length.png")
+  img2: !expr here::here("05_images/condition_length.png")
   tbl_file: !expr here::here("06_docs/table_template.csv")
   tbl_file2: !expr here::here("06_docs/table_template_2.csv")
   img_dir: !expr here::here("05_images")
@@ -49,7 +48,7 @@ This snapshot ESP provides an update to ecosystem indicators identified in the 2
 
 ::::
 
-\vspace{-0.3cm}
+\vspace{-0.5cm}
 
 :::: {layout="[0.56, -0.02, 0.42]"}
 
@@ -64,15 +63,11 @@ In the 2016 Climate Vulnerability Assessment @Hare2016, American plaice had an o
 
 ### Fish Condition
 
-Relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, greater reproductive output, and higher chance of survival @LeCren1951. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010, indicating thinner, lower-quality fish. Condition values have increased overall since 2010, with most recent years having average, high, or very high condition, and are experiencing fewer years of low and very-low condition compared to series lows in the 2000s. 
+Relative condition is the ratio of observed weight to predicted weight based on length. Fish with a higher relative condition are heavier and fatter, and are expected to have faster growth, greater reproductive output, and higher chance of survival @LeCren1951. Condition of American plaice across the Northeast Shelf exhibited lows in the 2000s to 2010 but increased overall since 2010, with most recent years having average, high, or very high condition. Although fish condition has generally increased, the maximum fish length of plaice caught in the bottom trawl survey has declined, indicating fatter but shorter fish.  
 :::
 
 ::: {}
 ![](`r params$img2`){width=100%}
-
-\vspace{0.2cm}
-
-![](`r params$img3`){width=100%}
 :::
 
 ::::
