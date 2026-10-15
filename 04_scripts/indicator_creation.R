@@ -443,3 +443,20 @@ plot_condition(
       linewidth = 2
     )
   )
+
+## Maximum length from survey data --
+max_length <- survdat |>
+  dplyr::filter(.data$SVSPP == '102') |>
+  dplyr::group_by(YEAR) |>
+  dplyr::summarise(DATA_VALUE = max(LENGTH, na.rm = TRUE)) |>
+  dplyr::mutate(INDICATOR_NAME = 'max_length')
+
+NEesp2::plt_indicator(data = max_length, include_trends = TRUE)
+
+ggplot2::ggsave(
+  here::here("05_images/max_length.png"),
+  width = 4.66,
+  height = 2,
+  units = "in",
+  dpi = 300
+)
