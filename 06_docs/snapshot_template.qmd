@@ -1,5 +1,5 @@
 ---
-title: "American Plaice (\\protect\\textit{Hippoglossoides platessoides}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile \\linebreak DRAFT"
+title: "American Plaice (\\protect\\textit{Hippoglossoides platessoides}) \\linebreak Snapshot Ecosystem & Socioeconomic Profile"
 format: 
   pdf:
     margin-left: "0.75in"
