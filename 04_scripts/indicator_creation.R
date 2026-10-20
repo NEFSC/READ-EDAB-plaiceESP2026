@@ -416,12 +416,15 @@ condition <- plot_condition(
     color = ggplot2::guide_legend(ncol = 2, title = ggplot2::element_blank())
   ) +
   ggplot2::theme(
-    plot.background = ggplot2::element_rect(
-      fill = "white"
-      # color = "black",
-      # linewidth = 2
+    #  panel.background = ggplot2::element_rect(fill = "transparent", color = NA),
+    plot.background = ggplot2::element_rect(fill = "transparent", color = NA),
+    legend.background = ggplot2::element_rect(fill = "transparent", color = NA),
+    legend.box.background = ggplot2::element_rect(
+      fill = "transparent",
+      color = NA
     )
   )
+
 
 ggplot2::ggsave(
   here::here("05_images/condition_nolength.png"),
@@ -576,5 +579,6 @@ ggplot2::ggsave(
   width = 4.66,
   height = 6,
   units = "in",
-  dpi = 300
+  dpi = 300,
+  bg = "transparent"
 )
